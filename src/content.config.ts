@@ -17,6 +17,7 @@ const posts = defineCollection({
     volume: z.string().optional(),
     draft: z.boolean().default(false),
     layout: z.string().optional(),
+    illustration: z.string().optional(),
   }),
 });
 
