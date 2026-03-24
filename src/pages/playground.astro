@@ -1,0 +1,438 @@
+---
+import '../styles/global.css';
+
+// Theme definitions
+const themes = [
+  { id: 'classic', name: '经典深蓝', desc: '还原邮件模板' },
+  { id: 'minimal', name: 'Medium', desc: '精确还原Medium' },
+  { id: 'warm', name: '暖色文艺', desc: '书卷气' },
+  { id: 'magazine', name: '杂志风', desc: '大胆现代' },
+  { id: 'forest', name: '森林绿', desc: '自然沉静' },
+  { id: 'notion', name: 'Notion 风', desc: '极简工具感' },
+  { id: 'purple', name: '科技紫', desc: '未来感' },
+  { id: 'ocean', name: '海洋渐变', desc: '清新通透' },
+  { id: 'zhihu', name: '知乎蓝', desc: '知识社区感' },
+  { id: 'sspai', name: '少数派', desc: '精致数字生活' },
+  { id: 'substack', name: 'Substack', desc: '专注长文订阅' },
+  { id: 'dark', name: '暗夜模式', desc: '护眼夜读' },
+];
+
+const samplePost = {
+  title: '设计的未来已来：Claude 设计负责人 Jenny Wen 谈 AI 如何重塑设计流程',
+  channel: "Lenny's Podcast",
+  guest: 'Jenny Wen',
+  date: '2026年3月1日',
+  reading_time: 18,
+  duration: '1h 15min',
+  volume: 'Vol.20260301',
+  thumbnail: 'https://i.ytimg.com/vi/eh8bcBIAAFo/sddefault.jpg',
+  tags: ['AI', '设计', 'Anthropic', '产品'],
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>播客精读录 — 样式选择器</title>
+  <style>
+    /* Theme switcher */
+    .theme-nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); }
+    .theme-btn { transition: all 0.2s; }
+    .theme-btn.active { transform: scale(1.05); box-shadow: 0 0 0 3px rgba(15,76,129,0.5); }
+
+    /* ===== Theme: Classic 深蓝 ===== */
+    .theme-classic { --brand: #0F4C81; --bg: #f0f2f5; --card: #fff; --text: #333; --text-muted: #666; --quote-bg: #f8f9fa; }
+    .theme-classic .masthead { background: #0F4C81; color: white; }
+    .theme-classic .section-title { background: #0F4C81; color: white; display: inline-block; padding: 6px 24px; border-radius: 999px; }
+    .theme-classic .article-title { border-bottom: 4px solid #0F4C81; padding-bottom: 16px; }
+    .theme-classic blockquote { background: #f8f9fa; border-left: 4px solid #0F4C81; }
+    .theme-classic .cta-btn { background: #0F4C81; color: white; }
+    .theme-classic .tag { background: rgba(15,76,129,0.1); color: #0F4C81; }
+    .theme-classic strong { color: #0F4C81; }
+    .theme-classic th { background: #0F4C81; color: white; }
+
+    /* ===== Theme: Minimal 极简黑白 (Medium精确还原) ===== */
+    .theme-minimal { --brand: #111; --bg: #fff; --card: #fff; --text: #242424; --text-muted: #6B6B6B; --quote-bg: transparent; }
+    .theme-minimal .masthead { background: transparent; color: #6B6B6B; border-bottom: none; font-size: 0.8rem; letter-spacing: 0.1em; }
+    .theme-minimal .section-title { background: transparent; color: #242424; font-size: 1.35rem; font-weight: 700; display: block; text-align: left; border-radius: 0; padding: 0; border-bottom: none; font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .theme-minimal .article-title { border-bottom: none; font-size: 2rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.011em; font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .theme-minimal blockquote { background: transparent; border-left: 3px solid #242424; color: #242424; font-style: italic; padding: 0 0 0 20px; font-size: 1.15rem; }
+    .theme-minimal .cta-btn { background: #1A8917; color: white; border-radius: 20px; }
+    .theme-minimal .tag { background: #F2F2F2; color: #242424; border: none; border-radius: 999px; font-size: 0.8rem; }
+    .theme-minimal strong { color: #242424; }
+    .theme-minimal th { background: #F2F2F2; color: #242424; font-weight: 600; }
+    .theme-minimal .card-wrapper { box-shadow: none; border: 1px solid #F2F2F2; border-radius: 0; }
+    .theme-minimal .site-header { background: white; color: #242424; border-bottom: 1px solid #F2F2F2; }
+    .theme-minimal .site-header a { color: #242424; }
+    .theme-minimal .site-footer { background: white; color: #6B6B6B; border-top: 1px solid #F2F2F2; }
+    .theme-minimal p { font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif; font-size: 1.05rem; line-height: 1.85; color: #242424; letter-spacing: -0.003em; }
+    .theme-minimal .hero-img { margin: 0 0 24px 0; }
+    .theme-minimal .hero-img img { width: 100%; }
+
+    /* ===== Theme: Warm 暖色文艺 ===== */
+    .theme-warm { --brand: #8B4513; --bg: #FDF8F0; --card: #FFFBF5; --text: #3E2723; --text-muted: #8D6E63; --quote-bg: #FFF3E0; }
+    .theme-warm .masthead { background: #8B4513; color: #FFF8E7; }
+    .theme-warm .section-title { background: #8B4513; color: #FFF8E7; display: inline-block; padding: 6px 24px; border-radius: 999px; }
+    .theme-warm .article-title { border-bottom: 3px solid #D4A574; padding-bottom: 16px; }
+    .theme-warm blockquote { background: #FFF3E0; border-left: 4px solid #D4A574; }
+    .theme-warm .cta-btn { background: #8B4513; color: #FFF8E7; }
+    .theme-warm .tag { background: rgba(139,69,19,0.1); color: #8B4513; }
+    .theme-warm strong { color: #8B4513; }
+    .theme-warm th { background: #8B4513; color: #FFF8E7; }
+    .theme-warm .card-wrapper { background: #FFFBF5; }
+    .theme-warm .site-header { background: #8B4513; }
+    .theme-warm .site-header a { color: #FFF8E7; }
+    .theme-warm .site-footer { background: #8B4513; color: rgba(255,248,231,0.7); }
+
+    /* ===== Theme: Magazine 杂志风 ===== */
+    .theme-magazine { --brand: #E63946; --bg: #f8f8f8; --card: #fff; --text: #1a1a1a; --text-muted: #777; --quote-bg: #fff5f5; }
+    .theme-magazine .masthead { background: linear-gradient(135deg, #1a1a1a, #333); color: white; padding: 8px 0; }
+    .theme-magazine .section-title { background: #E63946; color: white; display: inline-block; padding: 8px 28px; border-radius: 4px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em; }
+    .theme-magazine .article-title { border-bottom: none; font-size: 2rem; line-height: 1.2; }
+    .theme-magazine blockquote { background: #fff5f5; border-left: 4px solid #E63946; }
+    .theme-magazine .cta-btn { background: #E63946; color: white; border-radius: 4px; }
+    .theme-magazine .tag { background: #E63946; color: white; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .theme-magazine strong { color: #E63946; }
+    .theme-magazine th { background: #1a1a1a; color: white; }
+    .theme-magazine .site-header { background: #1a1a1a; }
+    .theme-magazine .site-footer { background: #1a1a1a; color: rgba(255,255,255,0.5); }
+    .theme-magazine .hero-img { margin: -24px -24px 24px -24px; }
+    .theme-magazine .hero-img img { max-height: 400px; object-fit: cover; width: 100%; }
+
+    /* ===== Theme: Forest 森林绿 ===== */
+    .theme-forest { --brand: #2D5016; --bg: #F2F7EE; --card: #FAFDF7; --text: #1a2e0d; --text-muted: #5C7A45; --quote-bg: #EBF3E5; }
+    .theme-forest .masthead { background: #2D5016; color: #E8F0E0; }
+    .theme-forest .section-title { background: #2D5016; color: #E8F0E0; display: inline-block; padding: 6px 24px; border-radius: 999px; }
+    .theme-forest .article-title { border-bottom: 3px solid #7BA05B; padding-bottom: 16px; }
+    .theme-forest blockquote { background: #EBF3E5; border-left: 4px solid #7BA05B; }
+    .theme-forest .cta-btn { background: #2D5016; color: #E8F0E0; }
+    .theme-forest .tag { background: rgba(45,80,22,0.1); color: #2D5016; }
+    .theme-forest strong { color: #2D5016; }
+    .theme-forest th { background: #2D5016; color: #E8F0E0; }
+    .theme-forest .card-wrapper { background: #FAFDF7; }
+    .theme-forest .site-header { background: #2D5016; }
+    .theme-forest .site-header a { color: #E8F0E0; }
+    .theme-forest .site-footer { background: #2D5016; color: rgba(232,240,224,0.7); }
+
+    /* ===== Theme: Notion 极简工具 ===== */
+    .theme-notion { --brand: #37352F; --bg: #FFFFFF; --card: #FFFFFF; --text: #37352F; --text-muted: #9B9A97; --quote-bg: #F7F6F3; }
+    .theme-notion .masthead { background: transparent; color: #37352F; border-bottom: 1px solid #E9E9E7; }
+    .theme-notion .section-title { background: transparent; color: #37352F; font-size: 1.2rem; font-weight: 600; border-radius: 0; padding: 0; border-bottom: 2px solid #37352F; display: inline-block; padding-bottom: 2px; }
+    .theme-notion .article-title { border-bottom: none; font-weight: 700; }
+    .theme-notion blockquote { background: #F7F6F3; border-left: 3px solid #E9E9E7; color: #6B6B6B; }
+    .theme-notion .cta-btn { background: #2EAADC; color: white; border-radius: 3px; }
+    .theme-notion .tag { background: #F1F1EF; color: #64635F; border-radius: 3px; font-size: 0.7rem; }
+    .theme-notion strong { color: #37352F; }
+    .theme-notion th { background: #F7F6F3; color: #37352F; font-weight: 600; }
+    .theme-notion .card-wrapper { box-shadow: none; border: 1px solid #E9E9E7; border-radius: 4px; }
+    .theme-notion .site-header { background: white; color: #37352F; border-bottom: 1px solid #E9E9E7; }
+    .theme-notion .site-header a { color: #37352F; }
+    .theme-notion .site-footer { background: #F7F6F3; color: #9B9A97; }
+
+    /* ===== Theme: Purple 科技紫 ===== */
+    .theme-purple { --brand: #6C2BD9; --bg: #F5F3FF; --card: #FFFFFF; --text: #1a1a2e; --text-muted: #7C7C9A; --quote-bg: #F0EBFF; }
+    .theme-purple .masthead { background: linear-gradient(135deg, #6C2BD9, #9F5AFF); color: white; }
+    .theme-purple .section-title { background: linear-gradient(135deg, #6C2BD9, #9F5AFF); color: white; display: inline-block; padding: 6px 24px; border-radius: 999px; }
+    .theme-purple .article-title { border-bottom: 3px solid #B794F4; padding-bottom: 16px; }
+    .theme-purple blockquote { background: #F0EBFF; border-left: 4px solid #9F5AFF; }
+    .theme-purple .cta-btn { background: linear-gradient(135deg, #6C2BD9, #9F5AFF); color: white; }
+    .theme-purple .tag { background: rgba(108,43,217,0.1); color: #6C2BD9; }
+    .theme-purple strong { color: #6C2BD9; }
+    .theme-purple th { background: #6C2BD9; color: white; }
+    .theme-purple .site-header { background: linear-gradient(135deg, #6C2BD9, #9F5AFF); }
+    .theme-purple .site-header a { color: white; }
+    .theme-purple .site-footer { background: #1a1a2e; color: rgba(255,255,255,0.5); }
+
+    /* ===== Theme: Ocean 海洋渐变 ===== */
+    .theme-ocean { --brand: #0077B6; --bg: #F0F9FF; --card: #FFFFFF; --text: #023E58; --text-muted: #5A9BB5; --quote-bg: #E6F4F9; }
+    .theme-ocean .masthead { background: linear-gradient(135deg, #0077B6, #00B4D8); color: white; }
+    .theme-ocean .section-title { background: linear-gradient(135deg, #0077B6, #00B4D8); color: white; display: inline-block; padding: 6px 24px; border-radius: 999px; }
+    .theme-ocean .article-title { border-bottom: 3px solid #90E0EF; padding-bottom: 16px; }
+    .theme-ocean blockquote { background: #E6F4F9; border-left: 4px solid #00B4D8; }
+    .theme-ocean .cta-btn { background: linear-gradient(135deg, #0077B6, #00B4D8); color: white; }
+    .theme-ocean .tag { background: rgba(0,119,182,0.1); color: #0077B6; }
+    .theme-ocean strong { color: #0077B6; }
+    .theme-ocean th { background: #0077B6; color: white; }
+    .theme-ocean .site-header { background: linear-gradient(135deg, #0077B6, #00B4D8); }
+    .theme-ocean .site-header a { color: white; }
+    .theme-ocean .site-footer { background: #023E58; color: rgba(255,255,255,0.5); }
+
+    /* ===== Theme: Zhihu 知乎蓝 ===== */
+    .theme-zhihu { --brand: #0066FF; --bg: #F6F6F6; --card: #FFFFFF; --text: #1A1A1A; --text-muted: #8590A6; --quote-bg: #F6F8FA; }
+    .theme-zhihu .masthead { background: #0066FF; color: white; }
+    .theme-zhihu .section-title { background: transparent; color: #0066FF; font-size: 1.3rem; font-weight: 700; border-left: 4px solid #0066FF; padding-left: 12px; display: block; text-align: left; border-radius: 0; }
+    .theme-zhihu .article-title { border-bottom: none; font-size: 1.8rem; font-weight: 700; }
+    .theme-zhihu blockquote { background: #F6F8FA; border-left: 4px solid #0066FF; }
+    .theme-zhihu .cta-btn { background: #0066FF; color: white; border-radius: 20px; }
+    .theme-zhihu .tag { background: rgba(0,102,255,0.08); color: #0066FF; border-radius: 3px; }
+    .theme-zhihu strong { color: #0066FF; }
+    .theme-zhihu th { background: #0066FF; color: white; }
+    .theme-zhihu .card-wrapper { border-radius: 8px; }
+    .theme-zhihu .site-header { background: #0066FF; }
+    .theme-zhihu .site-header a { color: white; }
+    .theme-zhihu .site-footer { background: #1A1A1A; color: rgba(255,255,255,0.5); }
+
+    /* ===== Theme: Sspai 少数派 ===== */
+    .theme-sspai { --brand: #D9363E; --bg: #F9F9F9; --card: #FFFFFF; --text: #333333; --text-muted: #999999; --quote-bg: #FFF5F5; }
+    .theme-sspai .masthead { background: #D9363E; color: white; }
+    .theme-sspai .section-title { background: transparent; color: #D9363E; font-size: 1.25rem; font-weight: 600; border-bottom: 2px solid #D9363E; display: inline-block; padding-bottom: 4px; border-radius: 0; }
+    .theme-sspai .article-title { border-bottom: none; font-weight: 700; letter-spacing: -0.01em; }
+    .theme-sspai blockquote { background: #FFF5F5; border-left: 3px solid #D9363E; }
+    .theme-sspai .cta-btn { background: #D9363E; color: white; border-radius: 6px; }
+    .theme-sspai .tag { background: #FFF1F0; color: #D9363E; border-radius: 4px; font-size: 0.75rem; }
+    .theme-sspai strong { color: #D9363E; }
+    .theme-sspai th { background: #D9363E; color: white; }
+    .theme-sspai .card-wrapper { border-radius: 12px; }
+    .theme-sspai .site-header { background: #D9363E; }
+    .theme-sspai .site-header a { color: white; }
+    .theme-sspai .site-footer { background: #333333; color: rgba(255,255,255,0.5); }
+
+    /* ===== Theme: Substack 长文订阅 ===== */
+    .theme-substack { --brand: #FF6719; --bg: #FFFFFF; --card: #FFFFFF; --text: #242424; --text-muted: #8F8F8F; --quote-bg: #FFF8F3; }
+    .theme-substack .masthead { background: transparent; color: #242424; border-bottom: 1px solid #E8E8E8; }
+    .theme-substack .section-title { background: transparent; color: #242424; font-size: 1.4rem; font-weight: 700; display: block; text-align: left; border-radius: 0; padding: 0; border-bottom: none; }
+    .theme-substack .article-title { border-bottom: none; font-size: 2rem; font-weight: 700; font-family: Georgia, 'Times New Roman', serif; line-height: 1.3; }
+    .theme-substack blockquote { background: transparent; border-left: 3px solid #E8E8E8; color: #555; font-style: italic; }
+    .theme-substack .cta-btn { background: #FF6719; color: white; border-radius: 20px; }
+    .theme-substack .tag { background: #F5F5F5; color: #666; border-radius: 999px; }
+    .theme-substack strong { color: #242424; }
+    .theme-substack th { background: #242424; color: white; }
+    .theme-substack .card-wrapper { box-shadow: none; border: 1px solid #E8E8E8; }
+    .theme-substack .site-header { background: white; color: #242424; border-bottom: 1px solid #E8E8E8; }
+    .theme-substack .site-header a { color: #242424; }
+    .theme-substack .site-footer { background: white; color: #8F8F8F; border-top: 1px solid #E8E8E8; }
+    .theme-substack p { font-family: Georgia, 'Times New Roman', serif; font-size: 1.05rem; line-height: 1.9; }
+
+    /* ===== Theme: Dark 暗夜模式 ===== */
+    .theme-dark { --brand: #60A5FA; --bg: #0F172A; --card: #1E293B; --text: #E2E8F0; --text-muted: #94A3B8; --quote-bg: #1E293B; }
+    .theme-dark .masthead { background: #1E293B; color: #60A5FA; border-bottom: 1px solid #334155; }
+    .theme-dark .section-title { background: rgba(96,165,250,0.15); color: #60A5FA; display: inline-block; padding: 6px 24px; border-radius: 999px; }
+    .theme-dark .article-title { border-bottom: 2px solid #334155; padding-bottom: 16px; color: #F1F5F9; }
+    .theme-dark blockquote { background: rgba(96,165,250,0.08); border-left: 4px solid #60A5FA; color: #CBD5E1; }
+    .theme-dark .cta-btn { background: #60A5FA; color: #0F172A; font-weight: 600; }
+    .theme-dark .tag { background: rgba(96,165,250,0.15); color: #60A5FA; }
+    .theme-dark strong { color: #93C5FD; }
+    .theme-dark th { background: #334155; color: #E2E8F0; }
+    .theme-dark td { border-color: #334155; }
+    .theme-dark .card-wrapper { background: #1E293B; border: 1px solid #334155; }
+    .theme-dark .site-header { background: #0F172A; border-bottom: 1px solid #1E293B; }
+    .theme-dark .site-header a { color: #E2E8F0; }
+    .theme-dark .site-footer { background: #0F172A; color: #64748B; border-top: 1px solid #1E293B; }
+    .theme-dark h1, .theme-dark h2, .theme-dark h3 { color: #F1F5F9; }
+    .theme-dark p, .theme-dark li { color: #CBD5E1; }
+    .theme-dark .border-b, .theme-dark .border-t { border-color: #334155; }
+  </style>
+</head>
+<body class="min-h-screen" style="background: #f0f2f5;">
+
+  <!-- Sticky Theme Switcher -->
+  <div class="theme-nav bg-white/90 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-4 flex-wrap">
+      <span class="font-bold text-sm text-gray-500">🎨 选择主题：</span>
+      {themes.map(t => (
+        <button
+          class="theme-btn px-4 py-2 rounded-lg text-sm font-medium border cursor-pointer hover:shadow-md"
+          data-theme={t.id}
+          onclick={`switchTheme('${t.id}')`}
+        >
+          {t.name}
+          <span class="text-xs text-gray-400 ml-1">({t.desc})</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Preview Container -->
+  <div id="preview" class="theme-classic">
+
+    <!-- === SECTION 1: 首页预览 === -->
+    <div class="max-w-5xl mx-auto px-4 mt-8 mb-4">
+      <h2 class="text-lg font-bold text-gray-600 mb-2">📋 首页预览</h2>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header bg-[#0F4C81] text-white">
+      <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="#" class="text-xl font-bold text-white">📖 播客精读录</a>
+        <div class="flex gap-6 text-sm">
+          <a href="#" class="text-white/80 hover:text-white">首页</a>
+          <a href="#" class="text-white/80 hover:text-white">关于</a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold mb-2" style="color: var(--brand)">播客精读录</h1>
+        <p style="color: var(--text-muted)">让优质播客内容以更易消化的文字形式触达更多人</p>
+      </div>
+
+      <!-- Card Grid -->
+      <div class="grid gap-6 md:grid-cols-2">
+        {[1,2].map(() => (
+          <div class="card-wrapper rounded-lg shadow-sm overflow-hidden" style="background: var(--card)">
+            <div class="aspect-video overflow-hidden">
+              <img src={samplePost.thumbnail} alt="" class="w-full h-full object-cover" />
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2 text-xs mb-2" style="color: var(--text-muted)">
+                <span>📺 {samplePost.channel}</span>
+                <span>·</span>
+                <span>{samplePost.date}</span>
+              </div>
+              <h2 class="font-bold text-lg leading-snug line-clamp-2" style="color: var(--text)">
+                {samplePost.title}
+              </h2>
+              <div class="flex flex-wrap gap-1 mt-3">
+                {samplePost.tags.slice(0, 3).map(tag => (
+                  <span class="tag text-[10px] px-2 py-0.5 rounded-full">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- === SECTION 2: 文章详情预览 === -->
+    <div class="max-w-5xl mx-auto px-4 mt-12 mb-4">
+      <h2 class="text-lg font-bold text-gray-600 mb-2">📄 文章详情预览</h2>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 pb-8">
+      <article class="card-wrapper rounded-lg shadow-sm overflow-hidden" style="background: var(--card)">
+        <!-- Masthead -->
+        <div class="masthead text-center py-3 text-sm tracking-widest">
+          {samplePost.volume}
+        </div>
+
+        <div class="px-6 py-8 md:px-12 md:py-12">
+          <!-- Title -->
+          <h1 class="article-title text-2xl md:text-3xl font-bold text-center leading-tight mb-4" style="color: var(--text)">
+            {samplePost.title}
+          </h1>
+
+          <!-- Meta -->
+          <div class="flex flex-wrap items-center justify-center gap-4 text-sm mb-8" style="color: var(--text-muted)">
+            <span>📺 {samplePost.channel}</span>
+            <span>🎙️ {samplePost.guest}</span>
+            <span>📅 {samplePost.date}</span>
+            <span>⏱️ {samplePost.reading_time} 分钟阅读</span>
+          </div>
+
+          <!-- Thumbnail -->
+          <div class="hero-img mb-8 rounded-lg overflow-hidden">
+            <img src={samplePost.thumbnail} alt="" class="w-full" />
+          </div>
+
+          <!-- CTA -->
+          <div class="text-center mb-8">
+            <a href="#" class="cta-btn inline-block px-6 py-2 rounded-full text-sm">🎧 收听原始播客</a>
+          </div>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-2 justify-center mb-8">
+            {samplePost.tags.map(tag => (
+              <span class="tag text-xs px-3 py-1 rounded-full">{tag}</span>
+            ))}
+          </div>
+
+          <!-- Sample Content -->
+          <div class="space-y-6" style="color: var(--text); line-height: 1.85;">
+            <blockquote class="pl-6 py-3 italic rounded-r-lg" style="color: var(--text-muted)">
+              "设计不是在 AI 到来之后死去的，它是在进化。问题不是设计师会不会被取代，而是不使用 AI 的设计师会不会被使用 AI 的设计师取代。"
+            </blockquote>
+
+            <h2 class="text-center my-8">
+              <span class="section-title">当设计遇见 AI</span>
+            </h2>
+
+            <p>在 Anthropic，Jenny Wen 领导着 Claude 的设计团队。她是最早一批将 AI 深度融入设计工作流的实践者之一。在这次与 Lenny 的深度对话中，Jenny 毫不保留地分享了她对设计未来的思考。</p>
+
+            <p>传统的设计流程——调研、线框图、视觉稿、原型、测试——正在被 AI 压缩成一个更加流动的过程。<strong>Jenny 认为，设计师的核心价值正在从"像素推手"转向"体验架构师"</strong>。</p>
+
+            <blockquote class="pl-6 py-3 italic rounded-r-lg" style="color: var(--text-muted)">
+              "如果你不能用文字描述清楚一个体验，你也画不好它。AI 时代让我们重新发现了文字的力量。"
+            </blockquote>
+
+            <h2 class="text-center my-8">
+              <span class="section-title">快问快答</span>
+            </h2>
+
+            <table class="w-full text-sm border-collapse rounded-lg overflow-hidden">
+              <thead>
+                <tr>
+                  <th class="py-2 px-4 text-left">问题</th>
+                  <th class="py-2 px-4 text-left">回答</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b" style="background: var(--quote-bg)">
+                  <td class="py-2 px-4">最推荐的设计工具？</td>
+                  <td class="py-2 px-4">Figma + Claude</td>
+                </tr>
+                <tr class="border-b">
+                  <td class="py-2 px-4">给新设计师的建议？</td>
+                  <td class="py-2 px-4">先学会写作，再学设计工具</td>
+                </tr>
+                <tr class="border-b" style="background: var(--quote-bg)">
+                  <td class="py-2 px-4">AI 会取代设计师吗？</td>
+                  <td class="py-2 px-4">不会，但会重新定义角色</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Footer -->
+          <div class="mt-12 pt-8 border-t text-center text-sm" style="color: var(--text-muted)">
+            <p>📖 本文由 AI 基于播客逐字稿深度改写，仅供学习参考</p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer bg-[#0F4C81] text-white/70 text-sm">
+      <div class="max-w-4xl mx-auto px-4 py-6 text-center">
+        <p>© 2026 播客精读录 — AI 驱动的播客深度阅读</p>
+      </div>
+    </footer>
+  </div>
+
+  <script is:inline>
+    function switchTheme(id) {
+      const preview = document.getElementById('preview');
+      preview.className = `theme-${id}`;
+
+      // Update bg
+      const bgMap = { classic: '#f0f2f5', minimal: '#fff', warm: '#FDF8F0', magazine: '#f8f8f8', forest: '#F2F7EE', notion: '#FFFFFF', purple: '#F5F3FF', ocean: '#F0F9FF', zhihu: '#F6F6F6', sspai: '#F9F9F9', substack: '#FFFFFF', dark: '#0F172A' };
+      document.body.style.background = bgMap[id] || '#f0f2f5';
+
+      // Update header/footer for themes that override
+      const header = document.querySelector('.site-header');
+      const footer = document.querySelector('.site-footer');
+      const hStyles = {
+        classic: ['#0F4C81','#0F4C81'], minimal: ['white','white'], warm: ['#8B4513','#8B4513'],
+        magazine: ['#1a1a1a','#1a1a1a'], forest: ['#2D5016','#2D5016'], notion: ['white','#F7F6F3'],
+        purple: ['linear-gradient(135deg,#6C2BD9,#9F5AFF)','#1a1a2e'], ocean: ['linear-gradient(135deg,#0077B6,#00B4D8)','#023E58'],
+        zhihu: ['#0066FF','#1A1A1A'], sspai: ['#D9363E','#333333'], substack: ['white','white'],
+        dark: ['#0F172A','#0F172A']
+      };
+      const [hBg, fBg] = hStyles[id] || ['#0F4C81','#0F4C81'];
+      header.style.background = hBg;
+      footer.style.background = fBg;
+
+      // Active btn
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === id);
+      });
+    }
+
+    // Default active
+    document.addEventListener('DOMContentLoaded', () => switchTheme('classic'));
+  </script>
+
+</body>
+</html>

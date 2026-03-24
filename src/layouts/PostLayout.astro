@@ -1,0 +1,90 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+const { frontmatter } = Astro.props;
+
+const formattedDate = new Date(frontmatter.date).toLocaleDateString('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${frontmatter.title} — 播客精读录`} description={frontmatter.title} ogImage={frontmatter.thumbnail}>
+  <article class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <!-- Masthead -->
+    <div class="bg-[#0F4C81] text-white text-center py-3 text-sm tracking-widest">
+      {frontmatter.volume || `Vol.${frontmatter.date.toISOString().slice(0,10).replace(/-/g, '')}`}
+    </div>
+
+    <div class="px-6 py-8 md:px-12 md:py-12">
+      <!-- Title -->
+      <h1 class="text-2xl md:text-3xl font-bold text-center leading-tight mb-4 pb-4 border-b-4 border-[#0F4C81]">
+        {frontmatter.title}
+      </h1>
+
+      <!-- Meta -->
+      <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500 mb-8">
+        <span>📺 {frontmatter.channel}</span>
+        {frontmatter.guest && <span>🎙️ {frontmatter.guest}</span>}
+        <span>📅 {formattedDate}</span>
+        {frontmatter.reading_time && <span>⏱️ {frontmatter.reading_time} 分钟阅读</span>}
+        {frontmatter.duration && <span>🎧 原始时长 {frontmatter.duration}</span>}
+      </div>
+
+      <!-- Thumbnail -->
+      {frontmatter.thumbnail && (
+        <div class="mb-8 rounded-lg overflow-hidden">
+          <img src={frontmatter.thumbnail} alt={frontmatter.title} class="w-full" loading="lazy" />
+        </div>
+      )}
+
+      <!-- Source link -->
+      <div class="text-center mb-8">
+        <a
+          href={frontmatter.source_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-[#0F4C81] text-white px-6 py-2 rounded-full text-sm hover:bg-[#0d3d68] transition-colors"
+        >
+          🎧 收听原始播客
+        </a>
+      </div>
+
+      <!-- Tags -->
+      {frontmatter.tags && frontmatter.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 justify-center mb-8">
+          {frontmatter.tags.map((tag: string) => (
+            <span class="bg-[#0F4C81]/10 text-[#0F4C81] text-xs px-3 py-1 rounded-full">{tag}</span>
+          ))}
+        </div>
+      )}
+
+      <!-- Content -->
+      <div class="prose prose-lg max-w-none
+        prose-headings:text-[#0F4C81] prose-headings:font-bold
+        prose-h2:text-center prose-h2:text-lg prose-h2:bg-[#0F4C81] prose-h2:text-white prose-h2:py-2 prose-h2:px-6 prose-h2:rounded-full prose-h2:inline-block prose-h2:mx-auto
+        prose-blockquote:bg-gray-50 prose-blockquote:border-l-4 prose-blockquote:border-[#0F4C81] prose-blockquote:italic prose-blockquote:py-2
+        prose-strong:text-[#0F4C81]
+        prose-a:text-[#0F4C81] prose-a:underline
+        prose-table:text-sm
+        prose-th:bg-[#0F4C81] prose-th:text-white prose-th:py-2 prose-th:px-4
+        prose-td:py-2 prose-td:px-4 prose-td:border-b
+        prose-tr:even:bg-gray-50
+      ">
+        <slot />
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-12 pt-8 border-t text-center text-sm text-gray-400">
+        <p>📖 本文由 AI 基于播客逐字稿深度改写，仅供学习参考</p>
+        <p class="mt-1">来源：{frontmatter.channel} | <a href={frontmatter.source_url} target="_blank" class="underline">原始视频</a></p>
+      </div>
+    </div>
+  </article>
+
+  <!-- Back to home -->
+  <div class="mt-8 text-center">
+    <a href="/" class="text-[#0F4C81] hover:underline">← 返回首页</a>
+  </div>
+</BaseLayout>
