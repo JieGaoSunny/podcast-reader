@@ -7,18 +7,16 @@ const posts = (await getCollection('posts'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="播客精读录 — AI 驱动的播客深度阅读">
+<BaseLayout title="播客精读录 — 好播客，值得再读一次">
   <main class="flex-1">
     <!-- Hero -->
-    <div class="max-w-[680px] mx-auto px-6 pt-12 pb-8">
-      <h1 class="text-[42px] font-bold tracking-tight leading-tight text-[#242424] mb-3" style="font-family: 'Source Serif 4', Georgia, serif;">播客精读录</h1>
-      <p class="text-xl text-gray-500 leading-relaxed" style="font-family: 'Source Serif 4', Georgia, serif;">好播客，值得再读一次。</p>
+    <div class="max-w-[720px] mx-auto px-6 pt-16 pb-10">
+      <h1 class="text-[40px] font-bold text-[#37352F] mb-2" style="letter-spacing: -0.02em;">播客精读录</h1>
+      <p class="text-lg text-[#9B9A97]">好播客，值得再读一次。</p>
     </div>
 
-    <div class="border-t border-gray-200"></div>
-
     <!-- Post List -->
-    <div class="max-w-[680px] mx-auto px-6 py-8">
+    <div class="max-w-[720px] mx-auto px-6 pb-16">
       {posts.map((post, i) => {
         const formattedDate = new Date(post.data.date).toLocaleDateString('zh-CN', {
           year: 'numeric',
@@ -26,36 +24,13 @@ const posts = (await getCollection('posts'))
           day: 'numeric',
         });
         return (
-          <article class:list={["group", i > 0 && "border-t border-gray-100 pt-8 mt-8"]}>
-            <a href={`/posts/${post.id}`} class="flex gap-6">
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-2 text-[13px] text-gray-500 mb-2">
-                  <span>{post.data.channel}</span>
-                  {post.data.guest && (
-                    <>
-                      <span>·</span>
-                      <span>{post.data.guest}</span>
-                    </>
-                  )}
-                </div>
-                <h2 class="text-xl font-bold leading-snug text-[#242424] group-hover:text-[#1a8917] transition-colors mb-2 line-clamp-2" style="font-family: 'Source Serif 4', Georgia, serif;">
-                  {post.data.title}
-                </h2>
-                <div class="flex items-center gap-3 text-[13px] text-gray-400 mt-3">
-                  <span>{formattedDate}</span>
-                  {post.data.reading_time && <span>· {post.data.reading_time} min read</span>}
-                  {post.data.duration && <span>· 🎧 {post.data.duration}</span>}
-                </div>
-                {post.data.tags && post.data.tags.length > 0 && (
-                  <div class="flex flex-wrap gap-1.5 mt-3">
-                    {post.data.tags.slice(0, 4).map((tag: string) => (
-                      <span class="bg-gray-100 text-gray-600 text-[11px] px-2.5 py-0.5 rounded-full">{tag}</span>
-                    ))}
-                  </div>
-                )}
-              </div>
+          <a href={`/posts/${post.id}`} class="group block">
+            <article class:list={[
+              "flex gap-5 py-4 -mx-3 px-3 rounded-[4px] transition-colors hover:bg-[#F7F6F3]",
+              i > 0 && "border-t border-[#E9E9E7]"
+            ]}>
               {post.data.thumbnail && (
-                <div class="hidden sm:block w-[200px] h-[134px] flex-shrink-0 rounded overflow-hidden">
+                <div class="hidden sm:block w-[120px] h-[80px] flex-shrink-0 rounded-[3px] overflow-hidden bg-[#F7F6F3]">
                   <img
                     src={post.data.thumbnail}
                     alt=""
@@ -64,8 +39,31 @@ const posts = (await getCollection('posts'))
                   />
                 </div>
               )}
-            </a>
-          </article>
+              <div class="flex-1 min-w-0">
+                <h2 class="text-[15px] font-semibold text-[#37352F] leading-snug line-clamp-2 mb-1">
+                  {post.data.title}
+                </h2>
+                <div class="flex items-center gap-2 text-[12px] text-[#9B9A97] mb-2">
+                  <span>{post.data.channel}</span>
+                  {post.data.guest && (
+                    <>
+                      <span>·</span>
+                      <span>{post.data.guest}</span>
+                    </>
+                  )}
+                  <span>·</span>
+                  <span>{formattedDate}</span>
+                </div>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1">
+                    {post.data.tags.slice(0, 3).map((tag: string) => (
+                      <span class="bg-[#F1F1EF] text-[#64635F] text-[11px] px-2 py-0.5 rounded-[3px]">{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          </a>
         );
       })}
     </div>
