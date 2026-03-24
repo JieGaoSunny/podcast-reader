@@ -15,6 +15,10 @@ const themes = [
   { id: 'sspai', name: '少数派', desc: '精致数字生活' },
   { id: 'substack', name: 'Substack', desc: '专注长文订阅' },
   { id: 'dark', name: '暗夜模式', desc: '护眼夜读' },
+  { id: 'paper', name: '纸质书', desc: '复古印刷感' },
+  { id: 'muji', name: '无印良品', desc: '日式极简' },
+  { id: 'ink', name: '水墨', desc: '中式留白' },
+  { id: 'mono', name: 'Monospace', desc: '程序员风' },
 ];
 
 const samplePost = {
@@ -223,6 +227,76 @@ const samplePost = {
     .theme-dark h1, .theme-dark h2, .theme-dark h3 { color: #F1F5F9; }
     .theme-dark p, .theme-dark li { color: #CBD5E1; }
     .theme-dark .border-b, .theme-dark .border-t { border-color: #334155; }
+
+    /* ===== Theme: Paper 纸质书 ===== */
+    .theme-paper { --brand: #5C4033; --bg: #FAF6F0; --card: #FFFEF9; --text: #3B3228; --text-muted: #8C7B6B; --quote-bg: #F5EDE3; }
+    .theme-paper .masthead { background: transparent; color: #8C7B6B; border-bottom: 1px solid #E8DFD3; font-style: italic; }
+    .theme-paper .section-title { background: transparent; color: #5C4033; font-size: 1.2rem; font-weight: 600; display: block; text-align: left; border-radius: 0; padding: 0; border-bottom: none; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; letter-spacing: 0.05em; }
+    .theme-paper .article-title { border-bottom: none; font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; font-weight: 600; letter-spacing: -0.01em; }
+    .theme-paper blockquote { background: transparent; border-left: 2px solid #C4B5A4; color: #6B5D4F; font-style: italic; font-family: 'Palatino Linotype', Georgia, serif; }
+    .theme-paper .cta-btn { background: #5C4033; color: #FAF6F0; border-radius: 4px; }
+    .theme-paper .tag { background: #F0E8DD; color: #6B5D4F; border-radius: 3px; font-size: 0.75rem; }
+    .theme-paper strong { color: #5C4033; }
+    .theme-paper th { background: #E8DFD3; color: #3B3228; font-weight: 600; }
+    .theme-paper .card-wrapper { box-shadow: none; border: 1px solid #E8DFD3; border-radius: 2px; }
+    .theme-paper .site-header { background: #FAF6F0; color: #5C4033; border-bottom: 1px solid #E8DFD3; }
+    .theme-paper .site-header a { color: #5C4033; }
+    .theme-paper .site-footer { background: #FAF6F0; color: #8C7B6B; border-top: 1px solid #E8DFD3; }
+    .theme-paper p { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif; font-size: 1.05rem; line-height: 1.9; color: #3B3228; }
+
+    /* ===== Theme: Muji 无印良品 ===== */
+    .theme-muji { --brand: #786B5E; --bg: #F8F6F3; --card: #FFFFFF; --text: #4A4A4A; --text-muted: #A0978B; --quote-bg: #F3F0EB; }
+    .theme-muji .masthead { background: transparent; color: #A0978B; border-bottom: none; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; }
+    .theme-muji .section-title { background: transparent; color: #786B5E; font-size: 0.85rem; font-weight: 500; display: block; text-align: left; border-radius: 0; padding: 0; letter-spacing: 0.15em; text-transform: uppercase; border-bottom: none; }
+    .theme-muji .article-title { border-bottom: none; font-weight: 400; font-size: 1.6rem; letter-spacing: 0.02em; color: #333; }
+    .theme-muji blockquote { background: transparent; border-left: 1px solid #C8BFB3; color: #786B5E; padding-left: 24px; font-size: 0.95rem; }
+    .theme-muji .cta-btn { background: transparent; color: #786B5E; border: 1px solid #C8BFB3; border-radius: 0; font-size: 0.8rem; letter-spacing: 0.1em; }
+    .theme-muji .tag { background: transparent; color: #A0978B; border: 1px solid #DDD6CC; border-radius: 0; font-size: 0.7rem; letter-spacing: 0.05em; }
+    .theme-muji strong { color: #4A4A4A; font-weight: 600; }
+    .theme-muji th { background: #F3F0EB; color: #4A4A4A; font-weight: 500; font-size: 0.8rem; letter-spacing: 0.05em; }
+    .theme-muji .card-wrapper { box-shadow: none; border: none; border-radius: 0; border-bottom: 1px solid #E8E2D9; }
+    .theme-muji .site-header { background: #F8F6F3; color: #786B5E; border-bottom: none; }
+    .theme-muji .site-header a { color: #786B5E; font-weight: 400; letter-spacing: 0.1em; }
+    .theme-muji .site-footer { background: #F8F6F3; color: #A0978B; font-size: 0.75rem; letter-spacing: 0.1em; }
+    .theme-muji p { font-size: 0.95rem; line-height: 2; color: #4A4A4A; }
+
+    /* ===== Theme: Ink 水墨 ===== */
+    .theme-ink { --brand: #2C2C2C; --bg: #FAFAF8; --card: #FFFFFF; --text: #2C2C2C; --text-muted: #999; --quote-bg: #F5F5F2; }
+    .theme-ink .masthead { background: transparent; color: #999; border-bottom: none; font-size: 0.8rem; }
+    .theme-ink .section-title { background: transparent; color: #2C2C2C; font-size: 1.1rem; font-weight: 300; display: block; text-align: center; border-radius: 0; padding: 8px 0; border-bottom: none; letter-spacing: 0.3em; }
+    .theme-ink .article-title { border-bottom: none; font-weight: 300; font-size: 1.8rem; letter-spacing: 0.08em; text-align: center; }
+    .theme-ink blockquote { background: transparent; border-left: none; color: #666; font-style: normal; text-align: center; padding: 16px 32px; font-size: 1rem; position: relative; }
+    .theme-ink blockquote::before { content: '「'; position: absolute; left: 8px; top: 12px; font-size: 1.5rem; color: #CCC; }
+    .theme-ink blockquote::after { content: '」'; position: absolute; right: 8px; bottom: 8px; font-size: 1.5rem; color: #CCC; }
+    .theme-ink .cta-btn { background: transparent; color: #2C2C2C; border: 1px solid #2C2C2C; border-radius: 0; font-size: 0.85rem; }
+    .theme-ink .tag { background: transparent; color: #999; border: 1px solid #DDD; border-radius: 0; font-size: 0.75rem; }
+    .theme-ink strong { color: #2C2C2C; font-weight: 600; }
+    .theme-ink th { background: transparent; color: #2C2C2C; font-weight: 400; border-bottom: 2px solid #2C2C2C; }
+    .theme-ink td { border-color: #E8E8E5; }
+    .theme-ink .card-wrapper { box-shadow: none; border: none; border-radius: 0; }
+    .theme-ink .site-header { background: #FAFAF8; color: #2C2C2C; border-bottom: none; }
+    .theme-ink .site-header a { color: #2C2C2C; font-weight: 300; letter-spacing: 0.15em; }
+    .theme-ink .site-footer { background: #FAFAF8; color: #BBB; }
+    .theme-ink p { font-size: 1rem; line-height: 2; color: #3A3A3A; letter-spacing: 0.02em; }
+    .theme-ink h1, .theme-ink h2, .theme-ink h3 { font-weight: 300; }
+
+    /* ===== Theme: Mono 程序员风 ===== */
+    .theme-mono { --brand: #24292E; --bg: #FAFBFC; --card: #FFFFFF; --text: #24292E; --text-muted: #6A737D; --quote-bg: #F6F8FA; }
+    .theme-mono .masthead { background: #24292E; color: #79B8FF; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.8rem; }
+    .theme-mono .section-title { background: transparent; color: #24292E; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.9rem; font-weight: 600; display: block; text-align: left; border-radius: 0; padding: 4px 0; border-bottom: 2px solid #E1E4E8; }
+    .theme-mono .section-title::before { content: '## '; color: #6A737D; }
+    .theme-mono .article-title { border-bottom: none; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 600; }
+    .theme-mono blockquote { background: #F6F8FA; border-left: 4px solid #DFE2E5; color: #6A737D; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.85rem; }
+    .theme-mono .cta-btn { background: #2EA44F; color: white; border-radius: 6px; font-family: -apple-system, sans-serif; font-size: 0.85rem; }
+    .theme-mono .tag { background: #DDF4FF; color: #0366D6; border-radius: 999px; font-family: 'SF Mono', monospace; font-size: 0.7rem; }
+    .theme-mono strong { color: #24292E; }
+    .theme-mono th { background: #F6F8FA; color: #24292E; font-weight: 600; font-size: 0.85rem; font-family: -apple-system, sans-serif; }
+    .theme-mono td { border-color: #E1E4E8; font-size: 0.9rem; }
+    .theme-mono .card-wrapper { box-shadow: none; border: 1px solid #E1E4E8; border-radius: 6px; }
+    .theme-mono .site-header { background: #24292E; }
+    .theme-mono .site-header a { color: #FFFFFF; font-weight: 500; }
+    .theme-mono .site-footer { background: #FAFBFC; color: #6A737D; border-top: 1px solid #E1E4E8; font-family: 'SF Mono', monospace; font-size: 0.75rem; }
+    .theme-mono p { font-size: 0.95rem; line-height: 1.75; }
   </style>
 </head>
 <body class="min-h-screen" style="background: #f0f2f5;">
