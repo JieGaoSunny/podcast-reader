@@ -23,6 +23,19 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('zh-CN', {
         {frontmatter.title}
       </h1>
 
+      <!-- Source link (prominent, right below title) -->
+      <div class="text-center mb-6">
+        <a
+          href={frontmatter.source_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 bg-[#0F4C81] text-white px-6 py-3 rounded-full text-base font-medium hover:bg-[#0d3d68] transition-colors shadow-md"
+        >
+          🎧 收听原始播客
+        </a>
+        <p class="mt-2 text-xs text-gray-400 break-all">{frontmatter.source_url}</p>
+      </div>
+
       <!-- Meta -->
       <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500 mb-8">
         <span>📺 {frontmatter.channel}</span>
@@ -38,18 +51,6 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('zh-CN', {
           <img src={frontmatter.thumbnail} alt={frontmatter.title} class="w-full" loading="lazy" />
         </div>
       )}
-
-      <!-- Source link -->
-      <div class="text-center mb-8">
-        <a
-          href={frontmatter.source_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block bg-[#0F4C81] text-white px-6 py-2 rounded-full text-sm hover:bg-[#0d3d68] transition-colors"
-        >
-          🎧 收听原始播客
-        </a>
-      </div>
 
       <!-- Tags -->
       {frontmatter.tags && frontmatter.tags.length > 0 && (
