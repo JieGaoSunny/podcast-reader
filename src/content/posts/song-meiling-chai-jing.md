@@ -1,4 +1,4 @@
----
+﻿---
 title: "宋美龄：如果人生重来，我不会结婚"
 date: 2026-03-14
 source_url: "https://www.youtube.com/watch?v=Fh5HeQN5kI8"
@@ -10,9 +10,7 @@ duration: "45min"
 reading_time: 20
 ---
 
-# 宋美龄：如果人生重来，我不会结婚
 
-Soong Mei-ling: If I Could Live Again, I Wouldn't Marry
 
 ## 编者按
 

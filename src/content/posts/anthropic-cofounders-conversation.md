@@ -1,4 +1,4 @@
----
+﻿---
 title: "Building Anthropic：七位联合创始人的圆桌对话"
 date: 2024-12-20
 source_url: "https://www.youtube.com/watch?v=om2lIWXLLN4"
@@ -11,9 +11,7 @@ duration: "60min"
 reading_time: 18
 ---
 
-# Building Anthropic：七位联合创始人的圆桌对话
 
-A conversation with Anthropic's co-founders
 
 ## 编者按
 

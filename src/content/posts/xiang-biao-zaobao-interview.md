@@ -11,9 +11,7 @@ duration: "20min"
 reading_time: 12
 ---
 
-# 社会人类学家项飙：要活得更像人，才不怕AI取代
 
-Xiang Biao on AI and meritocracy
 
 ## 编者按
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: "Manus 被收购前最后访谈：季逸超聊 Agent 的本质、技术路线与 AI 创业"
 date: 2025-12-30
 source_url: "https://www.youtube.com/watch?v=UqMtkgQe-kI"
@@ -10,9 +10,7 @@ duration: "3h+"
 reading_time: 45
 ---
 
-# Manus 被收购前最后访谈：季逸超聊 Agent 的本质、技术路线与 AI 创业
 
-The Last Interview Before Manus' Acquisition: Peak on Agent, Tech & Startup
 
 ## 编者按
 

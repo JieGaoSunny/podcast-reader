@@ -1,4 +1,4 @@
----
+﻿---
 title: "Sora 信息拼图与大模型淘汰赛：戴雨森、季逸超深度对话"
 date: 2024-08-17
 source_url: "https://www.youtube.com/watch?v=I5asIq_vpHs"
