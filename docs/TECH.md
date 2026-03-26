@@ -203,18 +203,96 @@ SITE_URL=https://podcast.societas.work
 - [ ] 端到端测试：YouTube 新视频 → 网站文章
 - [ ] 历史文章迁移
 
-## 8. 待确认 & 待调研 ⚠️
+## 8. Phase 2 内容管道设计（已确认 2026-03-24）
 
-### 待 J 确认
-（无）
+### 8.1 已确认决策
 
-### 已确认
-- GitHub: JieGaoSunny/podcast-reader
-- Cloudflare Pages: J 自行创建，构建配置由我提供
-- AI 改写：V2 风格，连贯叙事，~8000字
+| # | 决策 | 详情 |
+|---|------|------|
+| 1 | 内容来源 | 现有 5 个订阅频道，暂不做全网发现 |
+| 2 | 邮件推送 | 保留（n8n 现有 Resend 管线不动） |
+| 3 | 发布审核 | 三毛改写完先发飞书给 J review，确认后才 push |
+| 4 | 转录方案 | 继续用 SuperData（~50 次免费额度） |
+| 5 | Data Table | 允许新增字段 |
+| 6 | AI 改写 | Claude（通过三毛），替换千问 |
+| 7 | 通信方式 | 方案 D：三毛定时轮询 n8n Data Table |
 
-### 待技术调研
-1. **n8n → OpenClaw 通信方式**：OpenClaw 是否暴露 API/webhook？还是通过 n8n HTTP Request 节点调用？
-2. **Git Push from n8n**：n8n 是否有 GitHub 节点可以直接 push 文件？还是用 HTTP Request 调 GitHub API？
-3. **Cloudflare Pages 构建触发**：Git push 后是否自动触发？还是需要 webhook？
-4. **SuperData 替代方案**：yt-dlp + whisper 本地转录的可行性（Phase 3）
+### 8.2 架构
+
+```
+[n8n — 每天早7点]
+  ↓
+上游管线（不动）：检测新视频 → SuperData 转录 → 数据清洗
+  ↓
+存转录稿到 Data Table（Transcript 字段）+ 标记 WebsiteStatus=pending
+  ↓                                    ↓
+邮件管线（保留）                    [三毛 — heartbeat 定时检查]
+EmailGenerator → SendEmail              ↓
+                                  读 Data Table (status=pending)
+                                        ↓
+                                  Claude 深度改写 (~3000字)
+                                        ↓
+                                  FLUX.1-schnell 生成 Notion 插画
+                                        ↓
+                                  生成 .md + 插画 → 发飞书给 J review
+                                        ↓
+                                  J 确认 → git push → Cloudflare 自动部署
+                                        ↓
+                                  回写 Data Table (WebsiteStatus=published)
+```
+
+### 8.3 n8n API 配置
+
+- **端点**：`https://n8n.societas.work/api/v1/`
+- **认证**：`X-N8N-API-KEY` header（key 存于 `.env`，已加入 `.gitignore`）
+- **API key 有效期**：至 2026-06-20
+- **已验证**：可读取全部 14 个工作流（200 OK）
+
+### 8.4 Data Table 字段扩展
+
+现有 11 列 + 需新增 4 列：
+
+| 字段 | 类型 | 来源 | 说明 |
+|------|------|------|------|
+| Transcript | text | n8n | 转录稿全文（SuperData 输出） |
+| WebsiteStatus | text | 三毛 | pending → processing → review → published / failed |
+| ArticleSlug | text | 三毛 | URL slug（如 `2026-03-07-design-future`） |
+| PublishedAt_Web | datetime | 三毛 | 网站发布时间 |
+
+### 8.5 n8n 工作流改造范围
+
+**不动**（上游管线）：Video_update → Channel_List → YouTube Playlist2 → Upsert row(s)
+
+**下游管线改造**：
+
+| 原节点 | 动作 | 说明 |
+|--------|------|------|
+| Schedule Trigger → GetRows1 → supadata1 | 保留 | 检测+转录不变 |
+| 数据清洗 | 保留 + **新增写入** | 清洗后把 Transcript 存入 Data Table |
+| AI Agent1(千问) | **删除** | 改由三毛接管 |
+| EmailGenerator + SendEmail | **保留** | 继续发邮件（用原千问输出，或后续接三毛输出） |
+| Update row(s) | 保留 | WebsiteStatus 标记 |
+
+### 8.6 实施步骤
+
+1. ✅ 创建 n8n API key
+2. ✅ 验证 API 连通性（14 个 workflow 可读）
+3. [ ] 验证 Data Table API（读写 Video_Updates 表）
+4. [ ] n8n 下游管线改造：转录后存 Transcript + 标记 pending
+5. [ ] 三毛处理脚本：读 pending → 改写 → 生图 → 发飞书 review
+6. [ ] J review 确认后 → git push → Cloudflare 部署 → 回写 published
+7. [ ] 端到端测试
+8. [ ] 历史文章迁移（已有 10 篇）
+
+## 9. 待确认 & 风险
+
+### 待技术验证
+1. **n8n Data Table REST API**：确认具体端点和读写格式
+2. **SuperData 替代方案**：额度耗尽后切换 yt-dlp + Whisper API（$0.006/min）
+
+### 风险
+| 风险 | 缓解 |
+|------|------|
+| SuperData 额度耗尽 | 切换 Whisper API |
+| Git push 凭据过期 | J 手动 push 或更新凭据 |
+| Token 消耗过大 | 控制文章长度 ~3000 字，单篇约 10k token |

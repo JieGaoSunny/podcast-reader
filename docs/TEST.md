@@ -67,29 +67,80 @@
 
 ## 3. Phase 2 测试用例
 
-### 3.1 端到端管线
+### 3.1 n8n API 连通性
 
 | # | 用例 | 预期结果 | 状态 |
 |---|------|---------|------|
-| E1 | n8n 触发 → SuperData 转录 | 获取到逐字稿文本 | ⬜ |
-| E2 | 逐字稿 → OpenClaw 改写 | 返回符合规范的 Markdown 文章（含 frontmatter） | ⬜ |
-| E3 | Markdown → Git push | 文件正确推送到 GitHub repo | ⬜ |
-| E4 | Git push → Cloudflare 构建 | 自动触发构建，新文章在网站可见 | ⬜ |
-| E5 | 全流程时间 | 从触发到文章上线 < 10 分钟 | ⬜ |
-| E6 | 文章质量 | ~8000 字（V2风格），结构完整，无乱码 | ⬜ |
-| E7 | 重复处理 | 同一视频不会被重复处理 | ⬜ |
-| E8 | 错误处理 | SuperData 失败 → 标记失败，不阻塞其他视频 | ⬜ |
+| A1 | GET /api/v1/workflows | 200，返回工作流列表 | ⬜ |
+| A2 | 读 Data Table 全量记录 | 200，返回 Video_Updates 55 条数据 | ⬜ |
+| A3 | 读 Data Table 单条记录 | 200，返回指定 VideoId 记录 | ⬜ |
+| A4 | 写 Data Table（新增字段值） | 200，WebsiteStatus 字段可写入 | ⬜ |
+| A5 | API key 过期/无效 | 401，三毛能识别并告警 | ⬜ |
 
-### 3.2 AI 改写质量
+### 3.2 Data Table 字段扩展
 
 | # | 用例 | 预期结果 | 状态 |
 |---|------|---------|------|
-| Q1 | Frontmatter 完整性 | 所有必填字段正确生成 | ⬜ |
-| Q2 | 字数范围 | ~8000 字 | ⬜ |
-| Q3 | 章节结构 | 至少 5 个章节小标题 | ⬜ |
-| Q4 | 金句提取 | 至少 2 条 blockquote 金句 | ⬜ |
-| Q5 | 忠实度 | 不添加逐字稿之外的信息 | ⬜ |
-| Q6 | Markdown 语法 | 合法 Markdown，Astro 能正确渲染 | ⬜ |
+| D1 | Transcript 字段存在且可读 | 转录稿全文正确存储 | ⬜ |
+| D2 | WebsiteStatus 字段读写 | pending/processing/review/published/failed 正确流转 | ⬜ |
+| D3 | ArticleSlug 字段写入 | slug 格式正确（YYYY-MM-DD-keywords） | ⬜ |
+| D4 | PublishedAt_Web 字段写入 | datetime 格式正确 | ⬜ |
+
+### 3.3 n8n 下游管线改造
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|---------|------|
+| W1 | 转录后存 Transcript | SuperData 输出写入 Data Table Transcript 字段 | ⬜ |
+| W2 | 转录后标记 WebsiteStatus=pending | 状态正确设置 | ⬜ |
+| W3 | 千问节点已删除/禁用 | AI Agent1 不再执行 | ⬜ |
+| W4 | 邮件管线不受影响 | EmailGenerator + SendEmail 正常工作 | ⬜ |
+| W5 | 上游管线不受影响 | 新视频检测 + Upsert 正常 | ⬜ |
+
+### 3.4 三毛处理脚本
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|---------|------|
+| T1 | 轮询 Data Table | 正确识别 WebsiteStatus=pending 的记录 | ⬜ |
+| T2 | 无 pending 记录 | 不执行任何操作，无报错 | ⬜ |
+| T3 | Claude 改写 | 输出 ~3000 字 Markdown，V2 风格，含 frontmatter | ⬜ |
+| T4 | Frontmatter 完整性 | title/date/source_url/channel/guest/thumbnail/tags 全部正确 | ⬜ |
+| T5 | 章节结构 | ≥5 个 h2 小标题 | ⬜ |
+| T6 | 金句提取 | ≥2 条 blockquote | ⬜ |
+| T7 | 忠实度 | 不编造转录稿之外的事实 | ⬜ |
+| T8 | Markdown 语法 | Astro build 无报错 | ⬜ |
+| T9 | FLUX 插画生成 | Notion 风格，已保存到 public/images/ | ⬜ |
+| T10 | 标记 processing | 开始处理时 WebsiteStatus=processing | ⬜ |
+
+### 3.5 J Review 流程
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|---------|------|
+| R1 | 飞书通知 J | 改写完成后发飞书消息，含标题+摘要+预览 | ⬜ |
+| R2 | J 确认发布 | J 回复确认后才执行 git push | ⬜ |
+| R3 | J 拒绝/要求修改 | 三毛根据反馈修改，重新提交 review | ⬜ |
+| R4 | 标记 review | 发送 review 后 WebsiteStatus=review | ⬜ |
+
+### 3.6 发布流程
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|---------|------|
+| G1 | git add + commit | .md 文件 + 插画图片正确提交 | ⬜ |
+| G2 | git push | 推送到 GitHub 成功 | ⬜ |
+| G3 | Cloudflare 自动构建 | push 后自动触发，构建成功 | ⬜ |
+| G4 | 新文章可访问 | podcast.societas.work/posts/{slug} 返回 200 | ⬜ |
+| G5 | 首页更新 | 新文章出现在首页列表顶部 | ⬜ |
+| G6 | 回写 Data Table | WebsiteStatus=published + ArticleSlug + PublishedAt_Web | ⬜ |
+| G7 | .env 不被提交 | git status 不包含 .env | ⬜ |
+
+### 3.7 端到端集成
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|---------|------|
+| E1 | 全流程：新视频 → 文章上线 | n8n 转录 → 三毛改写 → J review → 发布 | ⬜ |
+| E2 | 全流程时间 | 三毛处理部分 < 5 分钟（不含 J review 等待） | ⬜ |
+| E3 | 重复处理防护 | 同一视频不会被重复改写 | ⬜ |
+| E4 | 错误恢复 | 改写失败 → WebsiteStatus=failed + 通知 J | ⬜ |
+| E5 | 多条 pending | 按队列逐条处理，不遗漏 | ⬜ |
 
 ## 4. 测试环境
 
@@ -117,6 +168,12 @@
 - [ ] Lighthouse 四项指标均 > 90
 
 ### Phase 2 验收
-- [ ] 所有 E1-E8、Q1-Q6 测试通过
+- [ ] A1-A5 n8n API 连通性全部通过
+- [ ] D1-D4 Data Table 字段扩展全部通过
+- [ ] W1-W5 n8n 工作流改造全部通过
+- [ ] T1-T10 三毛处理脚本全部通过
+- [ ] R1-R4 J Review 流程全部通过
+- [ ] G1-G7 发布流程全部通过
+- [ ] E1-E5 端到端集成全部通过
 - [ ] 至少完成 1 次完整端到端自动发布
 - [ ] J 对改写质量满意

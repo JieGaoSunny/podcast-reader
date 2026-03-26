@@ -10,7 +10,7 @@ const posts = defineCollection({
     channel: z.string(),
     guest: z.string().optional(),
     guest_title: z.string().optional(),
-    thumbnail: z.string().url(),
+    thumbnail: z.string(),
     tags: z.array(z.string()).default([]),
     duration: z.string().optional(),
     reading_time: z.number().optional(),

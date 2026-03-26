@@ -1,0 +1,6 @@
+{
+  "error": "transcript-unavailable",
+  "message": "Transcript Unavailable",
+  "details": "No transcript is available for this video",
+  "documentationUrl": "https://docs.supadata.ai/errors/transcript-unavailable"
+}
