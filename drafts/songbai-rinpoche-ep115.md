@@ -1,14 +1,4 @@
----
-title: "烦恼是一种很美的能量：松柏仁波切的人间佛法课"
-date: 2025-08-30
-source_url: "https://www.youtube.com/watch?v=AM2FCeM1PKg"
-channel: "只能喝酒的图书馆"
-guest: "松柏仁波切"
-thumbnail: "/images/thumbnails/AM2FCeM1PKg.jpg"
-tags: ["佛教","哲学","人生","修行"]
-duration: "2h+"
-reading_time: 25
----
+# 烦恼是一种很美的能量：松柏仁波切的人间佛法课
 
 **只能喝酒的图书馆 EP115 · 深度精读**
 

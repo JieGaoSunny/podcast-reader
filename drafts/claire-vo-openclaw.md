@@ -1,14 +1,4 @@
----
-title: "从怀疑论者到虔诚信徒：OpenClaw 如何改变了我的人生"
-date: 2026-03-29
-source_url: "https://www.youtube.com/watch?v=DIa0MYJzM5I"
-channel: "Lenny's Podcast"
-guest: "Claire Vo"
-thumbnail: "/images/thumbnails/DIa0MYJzM5I.jpg"
-tags: ["AI","OpenClaw","Agent","产品","创业"]
-duration: "1h+"
-reading_time: 35
----
+# 从怀疑论者到虔诚信徒：OpenClaw 如何改变了我的人生
 
 **嘉宾：Claire Vo | 主持人：Lenny Rachitsky | 频道：Lenny's Podcast | 日期：2026-03-30**
 

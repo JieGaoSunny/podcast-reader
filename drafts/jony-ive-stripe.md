@@ -1,14 +1,4 @@
----
-title: "Jony Ive：设计是对人类的感恩"
-date: 2025-05-08
-source_url: "https://www.youtube.com/watch?v=wLb9g_8r-mE"
-channel: "Stripe Sessions"
-guest: "Jony Ive"
-thumbnail: "/images/thumbnails/wLb9g_8r-mE.jpg"
-tags: ["设计","Apple","硅谷","创新"]
-duration: "45min"
-reading_time: 25
----
+# Jony Ive：设计是对人类的感恩
 
 **Jony Ive 与 Stripe CEO Patrick Collison 的炉边对话**
 
