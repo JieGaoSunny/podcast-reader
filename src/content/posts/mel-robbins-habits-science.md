@@ -1,6 +1,6 @@
 ---
 title: "习惯的科学：如何在一个月内改变你的生活"
-date: 2026-04-01
+date: 2026-01-08
 source_url: "https://www.youtube.com/watch?v=8dHEG7WxR4c"
 channel: "Mel Robbins"
 guest: "James Clear"

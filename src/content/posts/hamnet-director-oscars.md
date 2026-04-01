@@ -1,6 +1,6 @@
 ---
 title: "赵婷：在死亡恐惧与创作之间，寻找回家的路"
-date: 2026-04-01
+date: 2026-01-24
 source_url: "https://www.youtube.com/watch?v=IKLm3w341AM"
 channel: "The Interview"
 guest: "赵婷（Chloé Zhao）"
