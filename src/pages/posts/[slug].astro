@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SubscribeCard from '../../components/SubscribeCard.astro';
+import SubscribeFloat from '../../components/SubscribeFloat.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -145,6 +147,9 @@ for (const p of allPosts) {
           <Content />
         </div>
 
+        <!-- Subscribe Card -->
+        <SubscribeCard />
+
         <!-- Footer -->
         <div class="mt-12 pt-6 border-t border-[#E9E9E7] text-center text-[13px] text-[#9B9A97]">
           <p>📖 本文由 AI 基于播客逐字稿深度改写，仅供学习参考</p>
@@ -158,4 +163,6 @@ for (const p of allPosts) {
       </article>
     </main>
   </div>
+  <!-- Subscribe Float -->
+  <SubscribeFloat />
 </BaseLayout>
