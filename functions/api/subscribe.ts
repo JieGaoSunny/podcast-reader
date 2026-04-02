@@ -50,13 +50,20 @@ export const onRequestPost: PagesFunction<{ RESEND_API_KEY: string }> = async (c
       body: JSON.stringify({
         from: `播客精读录 <${FROM_EMAIL}>`,
         to: email,
-        subject: '🎉 欢迎订阅播客精读录',
+        subject: '订阅成功 | 播客精读录',
         html: `
-          <div style="max-width:560px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#37352F;">
-            <h2 style="color:#37352F;">欢迎加入播客精读录 📬</h2>
-            <p>感谢你的订阅！从现在起，每当有新的播客精读文章发布，你将第一时间收到通知。</p>
-            <p>我们精选优质播客，用深度文字还原每一期的精华内容，帮你用阅读的时间获取播客的洞察。</p>
-            <p><a href="https://podcast.societas.work" style="color:#0F4C81;">开始阅读 →</a></p>
+          <div style="max-width:560px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter','Noto Sans SC',sans-serif;color:#37352F;line-height:1.8;font-size:16px;">
+            <p>你好，</p>
+            <p>欢迎。你刚刚加入了一个小众的阅读角落。</p>
+            <p>好播客值得再读一遍。</p>
+            <p>我们把最好的播客变成最好的文字——每周 3 篇，覆盖 AI、投资、哲学、人生。来自全球最值得听的对话。新文章发布，你会第一时间收到。</p>
+            <p><strong>先读这三篇：</strong></p>
+            <p>📌 <a href="https://podcast.societas.work/posts/jensen-huang-lex-fridman" style="color:#0F4C81;">黄仁勋：NVIDIA 的极限协同设计哲学</a></p>
+            <p>📌 <a href="https://podcast.societas.work/posts/jony-ive-stripe" style="color:#0F4C81;">Jony Ive：设计是对人类的感恩</a></p>
+            <p>📌 <a href="https://podcast.societas.work/posts/song-meiling-chai-jing" style="color:#0F4C81;">宋美龄：如果人生重来，我不会结婚</a></p>
+            <p>对了，如果你最近听到什么好播客，回复这封邮件就行。你推荐的，我优先安排。</p>
+            <p>保持好奇，保持深度。</p>
+            <p>—— 播客精读录</p>
             <hr style="border:none;border-top:1px solid #E9E9E7;margin:24px 0;" />
             <p style="font-size:13px;color:#9B9A97;">如不想继续接收，回复此邮件告知即可退订。</p>
           </div>
