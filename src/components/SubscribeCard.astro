@@ -1,0 +1,78 @@
+---
+// 文章末尾固定订阅卡片 — Notion 风格 + 自建 Resend
+---
+
+<section id="subscribe-card" class="mt-12 mx-auto max-w-[560px]">
+  <div class="border border-[#E9E9E7] rounded-lg bg-[#F7F6F3] px-6 py-8 text-center">
+    <p class="text-lg font-semibold text-[#37352F] mb-1">📬 不错过下一次深度思考</p>
+    <p class="text-sm text-[#9B9A97] mb-5">每周精选播客精读，直接送到你的收件箱</p>
+
+    <form id="subscribe-form" class="flex flex-col sm:flex-row gap-3 items-center justify-center max-w-[420px] mx-auto">
+      <input
+        type="email"
+        id="subscribe-email"
+        required
+        placeholder="你的邮箱地址"
+        class="flex-1 w-full sm:w-auto px-4 py-2.5 rounded-lg border border-[#E9E9E7] bg-white text-[#37352F] text-sm
+               placeholder:text-[#9B9A97] focus:outline-none focus:ring-2 focus:ring-[#37352F]/20 focus:border-[#37352F]
+               transition-all"
+      />
+      <button
+        type="submit"
+        id="subscribe-btn"
+        class="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-[#37352F] text-white text-sm font-medium
+               hover:bg-[#2F2D28] transition-colors shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        订阅
+      </button>
+    </form>
+
+    <p id="subscribe-msg" class="mt-4 text-xs text-[#9B9A97] hidden"></p>
+    <p class="mt-3 text-xs text-[#9B9A97]">免费订阅 · 随时退订</p>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('subscribe-form') as HTMLFormElement;
+  const emailInput = document.getElementById('subscribe-email') as HTMLInputElement;
+  const btn = document.getElementById('subscribe-btn') as HTMLButtonElement;
+  const msg = document.getElementById('subscribe-msg') as HTMLParagraphElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    if (!email) return;
+
+    btn.disabled = true;
+    btn.textContent = '提交中...';
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        localStorage.setItem('podcast_subscribed', 'true');
+        msg.textContent = '🎉 订阅成功！欢迎邮件已发送到你的收件箱';
+        msg.className = 'mt-4 text-xs text-green-600';
+        msg.classList.remove('hidden');
+        form.innerHTML = '<p class="text-sm text-[#37352F] font-medium">✅ 你已成功订阅</p>';
+      } else {
+        const data = await res.json();
+        msg.textContent = data.error === 'Invalid email' ? '请输入有效的邮箱地址' : '订阅失败，请稍后重试';
+        msg.className = 'mt-4 text-xs text-red-500';
+        msg.classList.remove('hidden');
+        btn.disabled = false;
+        btn.textContent = '订阅';
+      }
+    } catch {
+      msg.textContent = '网络错误，请稍后重试';
+      msg.className = 'mt-4 text-xs text-red-500';
+      msg.classList.remove('hidden');
+      btn.disabled = false;
+      btn.textContent = '订阅';
+    }
+  });
+</script>

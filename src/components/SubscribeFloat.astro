@@ -1,0 +1,122 @@
+---
+// 右下角浮窗 — 阅读满 3 篇后触发，Notion 风格
+---
+
+<!-- 浮窗 HTML -->
+<div
+  id="subscribe-float"
+  class="fixed z-[999] hidden transition-all duration-300 ease-out opacity-0 translate-y-4
+         bottom-5 right-5 w-[320px]
+         max-[640px]:bottom-0 max-[640px]:right-0 max-[640px]:left-0 max-[640px]:w-full max-[640px]:rounded-none max-[640px]:rounded-t-xl"
+  role="dialog"
+  aria-label="订阅提示"
+>
+  <div class="border border-[#E9E9E7] rounded-xl bg-white shadow-lg px-5 py-5
+              max-[640px]:rounded-none max-[640px]:rounded-t-xl max-[640px]:px-4 max-[640px]:py-4">
+    <!-- 关闭按钮 -->
+    <button
+      id="float-close"
+      class="absolute top-2.5 right-3 text-[#9B9A97] hover:text-[#37352F] transition-colors text-lg leading-none"
+      aria-label="关闭"
+    >&times;</button>
+
+    <p class="text-[15px] font-semibold text-[#37352F] mb-1 pr-5">📬 你已读了 <span id="float-count">3</span> 篇精读</p>
+    <p class="text-[13px] text-[#9B9A97] mb-4 leading-relaxed">每周为你节省 10 小时播客时间 — 订阅不错过新文章</p>
+
+    <button
+      id="float-subscribe-btn"
+      class="w-full bg-[#37352F] text-white text-sm font-medium py-2.5 rounded-lg hover:bg-[#2F2D28] transition-colors"
+    >
+      去订阅 ↓
+    </button>
+  </div>
+</div>
+
+<!-- 阅读计数 + 浮窗逻辑 -->
+<script>
+  (function () {
+    const STORAGE_KEY = 'podcast_read_slugs';
+    const SUBSCRIBED_KEY = 'podcast_subscribed';
+    const DISMISSED_KEY = 'podcast_float_dismissed_at';
+    const THRESHOLD = 3;
+    const DISMISS_DAYS = 7;
+
+    // 已订阅，直接退出
+    if (localStorage.getItem(SUBSCRIBED_KEY) === 'true') return;
+
+    // 7 天内关闭过，不再弹
+    const dismissedAt = localStorage.getItem(DISMISSED_KEY);
+    if (dismissedAt) {
+      const daysSince = (Date.now() - Number(dismissedAt)) / (1000 * 60 * 60 * 24);
+      if (daysSince < DISMISS_DAYS) return;
+    }
+
+    // 获取当前 slug
+    const path = window.location.pathname;
+    const match = path.match(/\/posts\/([^/]+)\/?$/);
+    if (!match) return; // 非文章页不处理
+
+    const slug = match[1];
+
+    // 更新已读列表
+    let readSlugs: string[] = [];
+    try {
+      readSlugs = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    } catch { readSlugs = []; }
+
+    if (!readSlugs.includes(slug)) {
+      readSlugs.push(slug);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(readSlugs));
+    }
+
+    const count = readSlugs.length;
+
+    // 未达阈值，退出
+    if (count < THRESHOLD) return;
+
+    // 显示浮窗
+    const float = document.getElementById('subscribe-float');
+    const countEl = document.getElementById('float-count');
+    const closeBtn = document.getElementById('float-close');
+    const subscribeBtn = document.getElementById('float-subscribe-btn');
+
+    if (!float) return;
+    if (countEl) countEl.textContent = String(count);
+
+    // 延迟显示（等用户开始阅读）
+    setTimeout(() => {
+      float.classList.remove('hidden');
+      requestAnimationFrame(() => {
+        float.classList.remove('opacity-0', 'translate-y-4');
+        float.classList.add('opacity-100', 'translate-y-0');
+      });
+    }, 3000);
+
+    // 关闭
+    function dismiss() {
+      float!.classList.add('opacity-0', 'translate-y-4');
+      float!.classList.remove('opacity-100', 'translate-y-0');
+      setTimeout(() => float!.classList.add('hidden'), 300);
+      localStorage.setItem(DISMISSED_KEY, String(Date.now()));
+    }
+
+    closeBtn?.addEventListener('click', dismiss);
+
+    // ESC 关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !float!.classList.contains('hidden')) dismiss();
+    });
+
+    // 点击"去订阅"→ 滚动到底部订阅框
+    subscribeBtn?.addEventListener('click', () => {
+      const card = document.getElementById('subscribe-card');
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // 高亮一下订阅框
+        card.classList.add('ring-2', 'ring-[#37352F]', 'ring-offset-2');
+        setTimeout(() => card.classList.remove('ring-2', 'ring-[#37352F]', 'ring-offset-2'), 2000);
+      }
+      dismiss();
+    });
+  })();
+</script>

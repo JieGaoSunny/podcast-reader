@@ -1,5 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import SubscribeCard from '../components/SubscribeCard.astro';
+import SubscribeFloat from '../components/SubscribeFloat.astro';
 
 const { frontmatter } = Astro.props;
 
@@ -76,6 +78,9 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('zh-CN', {
         <slot />
       </div>
 
+      <!-- Subscribe Card -->
+      <SubscribeCard />
+
       <!-- Footer -->
       <div class="mt-12 pt-8 border-t text-center text-sm text-gray-400">
         <p>📖 本文由 AI 基于播客逐字稿深度改写，仅供学习参考</p>
@@ -88,4 +93,7 @@ const formattedDate = new Date(frontmatter.date).toLocaleDateString('zh-CN', {
   <div class="mt-8 text-center">
     <a href="/" class="text-[#0F4C81] hover:underline">← 返回首页</a>
   </div>
+
+  <!-- Subscribe Float (3篇阅读后触发) -->
+  <SubscribeFloat />
 </BaseLayout>
