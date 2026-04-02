@@ -1,29 +1,31 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+// Cloudflare Pages Function: POST /api/subscribe
 const AUDIENCE_ID = 'aea8397c-fbcc-4e78-8287-9c78ce4c29e9';
 const FROM_EMAIL = 'podcast@societas.work';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS
-  res.setHeader('Access-Control-Allow-Origin', 'https://podcast.societas.work');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
-  const { email } = req.body || {};
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ error: 'Invalid email' });
-  }
+export const onRequestPost: PagesFunction<{ RESEND_API_KEY: string }> = async (context) => {
+  const { env } = context;
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': 'https://podcast.societas.work',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
 
   try {
+    const body = await context.request.json() as { email?: string };
+    const email = body?.email;
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return new Response(JSON.stringify({ error: 'Invalid email' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
+    }
+
     // 1. Add contact to audience
     const contactRes = await fetch(`https://api.resend.com/audiences/${AUDIENCE_ID}/contacts`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, unsubscribed: false }),
@@ -32,14 +34,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!contactRes.ok) {
       const err = await contactRes.text();
       console.error('Resend contact error:', err);
-      return res.status(500).json({ error: 'Failed to subscribe' });
+      return new Response(JSON.stringify({ error: 'Failed to subscribe' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      });
     }
 
     // 2. Send welcome email
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -59,9 +64,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }),
     });
 
-    return res.status(200).json({ success: true });
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    });
   } catch (err) {
     console.error('Subscribe error:', err);
-    return res.status(500).json({ error: 'Internal error' });
+    return new Response(JSON.stringify({ error: 'Internal error' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    });
   }
-}
+};
+
+// Handle CORS preflight
+export const onRequestOptions: PagesFunction = async () => {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': 'https://podcast.societas.work',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+};
