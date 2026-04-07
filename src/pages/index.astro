@@ -22,8 +22,17 @@ const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
       <p class="text-lg text-[#9B9A97]">好播客，值得再读一次。</p>
     </div>
 
+    <!-- Sort Filter Bar -->
+    <div class="max-w-[720px] mx-auto px-6 pb-4">
+      <div class="flex items-center gap-1">
+        <svg class="w-3.5 h-3.5 text-[#9B9A97] mr-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M6 12h12M9 18h6"/></svg>
+        <button data-sort="published" class="sort-btn sort-btn-active text-[12px] px-2.5 py-1 rounded-[3px] transition-colors">最新上架</button>
+        <button data-sort="date" class="sort-btn text-[12px] px-2.5 py-1 rounded-[3px] transition-colors">视频时间</button>
+      </div>
+    </div>
+
     <!-- Post List -->
-    <div class="max-w-[720px] mx-auto px-6 pb-16">
+    <div id="post-list" class="max-w-[720px] mx-auto px-6 pb-16">
       {posts.map((post, i) => {
         const formattedDate = new Date(post.data.date).toLocaleDateString('zh-CN', {
           year: 'numeric',
@@ -32,10 +41,10 @@ const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         });
         const publishedAt = post.data.published_at;
         const isNew = publishedAt && new Date(publishedAt) >= sevenDaysAgo;
-        const showPublishedAt = publishedAt && new Date(publishedAt).toDateString() !== new Date(post.data.date).toDateString();
-        const publishedAtStr = publishedAt ? `${new Date(publishedAt).getMonth() + 1}月${new Date(publishedAt).getDate()}日` : '';
         return (
-          <a href={`/posts/${post.id}`} class="group block">
+          <a href={`/posts/${post.id}`} class="group block post-item"
+             data-published-at={publishedAt ? new Date(publishedAt).getTime() : new Date(post.data.date).getTime()}
+             data-date={new Date(post.data.date).getTime()}>
             <article class:list={[
               "flex gap-5 py-4 -mx-3 px-3 rounded-[4px] transition-colors hover:bg-[#F7F6F3]",
               i > 0 && "border-t border-[#E9E9E7]"
@@ -65,12 +74,6 @@ const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
                   )}
                   <span>·</span>
                   <span>{formattedDate}</span>
-                  {showPublishedAt && (
-                    <>
-                      <span>·</span>
-                      <span>上架于 {publishedAtStr}</span>
-                    </>
-                  )}
                 </div>
                 {post.data.tags && post.data.tags.length > 0 && (
                   <div class="flex flex-wrap gap-1">
@@ -87,3 +90,53 @@ const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     </div>
   </main>
 </BaseLayout>
+
+<style is:global>
+  .sort-btn {
+    color: #9B9A97;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+  }
+  .sort-btn:hover {
+    background: #F7F6F3;
+    color: #37352F;
+  }
+  .sort-btn-active {
+    background: #F1F1EF;
+    color: #37352F;
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  const btns = document.querySelectorAll('.sort-btn');
+  const list = document.getElementById('post-list');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('sort-btn-active'));
+      btn.classList.add('sort-btn-active');
+
+      const key = btn.getAttribute('data-sort') === 'date' ? 'data-date' : 'data-published-at';
+      const items = Array.from(list!.querySelectorAll('.post-item'));
+      items.sort((a, b) => {
+        return Number(b.getAttribute(key)) - Number(a.getAttribute(key));
+      });
+
+      // Re-apply borders
+      items.forEach((item, i) => {
+        const article = item.querySelector('article');
+        if (article) {
+          if (i > 0) {
+            article.classList.add('border-t', 'border-[#E9E9E7]');
+          } else {
+            article.classList.remove('border-t', 'border-[#E9E9E7]');
+          }
+        }
+        list!.appendChild(item);
+      });
+    });
+  });
+</script>
