@@ -1,6 +1,7 @@
-﻿---
+---
 title: "社会人类学家项飙：要活得更像人，才不怕AI取代"
 date: 2026-02-16
+published_at: 2026-03-24
 source_url: "https://www.youtube.com/watch?v=opMDb2lZjyA"
 channel: "zaobaosg 早报"
 guest: "项飙"

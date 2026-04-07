@@ -1,6 +1,7 @@
 ---
 title: "如何做好一场演讲：MIT 传奇教授 Patrick Winston 的沟通课"
 date: 2019-12-20
+published_at: 2026-04-07
 source_url: "https://www.youtube.com/watch?v=Unzc731iCUY"
 channel: "MIT OpenCourseWare"
 guest: "Patrick Winston"

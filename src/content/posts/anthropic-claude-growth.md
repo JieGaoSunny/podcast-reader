@@ -1,6 +1,7 @@
 ---
 title: "Anthropic 如何用 Claude 自动化增长：14 个月从 10 亿到 190 亿美元的疯狂之路"
 date: 2026-04-05
+published_at: 2026-04-07
 source_url: "https://www.youtube.com/watch?v=k-H4nsOTuxU"
 channel: "Lenny's Podcast"
 guest: "Amjad Avasari"

@@ -1,6 +1,7 @@
 ---
 title: "盖伊·斯皮尔：一位价值投资者的谢幕"
 date: 2026-03-27
+published_at: 2026-04-01
 source_url: "https://www.youtube.com/watch?v=HTBmimvFMtU"
 channel: "知行小酒馆"
 guest: "CxEric"

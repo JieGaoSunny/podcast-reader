@@ -1,6 +1,7 @@
 ---
 title: "烦恼是一种很美的能量：松柏仁波切的人间佛法课"
 date: 2025-08-30
+published_at: 2026-03-30
 source_url: "https://www.youtube.com/watch?v=AM2FCeM1PKg"
 channel: "只能喝酒的图书馆"
 guest: "松柏仁波切"

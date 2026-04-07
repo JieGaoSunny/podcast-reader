@@ -1,6 +1,7 @@
 ---
 title: "人生都是祸福相倚：易经卦象蕴含的人生智慧"
 date: 2025-07-11
+published_at: 2026-03-26
 source_url: "https://www.youtube.com/watch?v=Xmeo7PJ00k0"
 channel: "Sherry's Notes 雪力的心理学笔记"
 guest: "王思迅"

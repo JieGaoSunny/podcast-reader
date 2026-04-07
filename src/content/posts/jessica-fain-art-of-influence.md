@@ -1,6 +1,7 @@
 ---
 title: "影响力的炼金术：产品经理如何说服高管买单"
 date: 2025-02-14
+published_at: 2026-03-26
 source_url: "https://www.youtube.com/watch?v=RP4vJeIb7WU"
 channel: "Lenny's Podcast"
 guest: "Jessica Fain"

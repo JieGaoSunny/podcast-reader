@@ -1,6 +1,7 @@
 ---
 title: "哈佛教授的写作法则：Steven Pinker 谈如何写出好文章"
 date: 2025-06-04
+published_at: 2026-04-07
 source_url: "https://www.youtube.com/watch?v=nBQPnvmaNcE"
 channel: "David Perell"
 guest: "Steven Pinker"

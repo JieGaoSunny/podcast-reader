@@ -1,6 +1,7 @@
 ---
 title: "AGI 之后的世界：Amodei 与 Hassabis 在达沃斯的正面交锋"
 date: 2026-01-22
+published_at: 2026-03-26
 source_url: "https://www.youtube.com/watch?v=NnVW9epLlTM"
 channel: "World Economic Forum"
 guest: "Dario Amodei, Demis Hassabis"

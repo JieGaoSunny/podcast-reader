@@ -15,6 +15,7 @@ const posts = defineCollection({
     duration: z.string().optional(),
     reading_time: z.number().optional(),
     volume: z.string().optional(),
+    published_at: z.coerce.date().optional(),
     draft: z.boolean().default(false),
     layout: z.string().optional(),
     illustration: z.string().optional(),

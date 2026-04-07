@@ -1,6 +1,7 @@
-﻿---
+---
 title: "乔布斯2005斯坦福演讲精读：求知若饥，虚心若愚"
 date: 2008-03-08
+published_at: 2026-03-24
 source_url: "https://www.youtube.com/watch?v=UF8uR6Z6KLc"
 channel: "Stanford"
 guest: "Steve Jobs"

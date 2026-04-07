@@ -1,6 +1,7 @@
 ---
 title: "Andrej Karpathy：从宇宙模拟器到 AI 的生物引导程序"
 date: 2024-06-10
+published_at: 2026-03-26
 source_url: "https://www.youtube.com/watch?v=cdiD-9MMpb0"
 channel: "Lex Fridman Podcast"
 guest: "Andrej Karpathy"

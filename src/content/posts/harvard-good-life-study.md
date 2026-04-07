@@ -1,6 +1,7 @@
 ---
 title: "哈佛 86 年幸福研究告诉你：什么才是好的人生？"
 date: 2024-04-04
+published_at: 2026-04-07
 source_url: "https://www.youtube.com/watch?v=5jnEizYzQl0"
 channel: "Mel Robbins"
 guest: "Robert Waldinger"

@@ -1,6 +1,7 @@
-﻿---
+---
 title: "Manus 被收购前最后访谈：季逸超聊 Agent 的本质、技术路线与 AI 创业"
 date: 2025-12-30
+published_at: 2026-03-24
 source_url: "https://www.youtube.com/watch?v=UqMtkgQe-kI"
 channel: "张小珺 Podcast"
 guest: "季逸超(Peak)"

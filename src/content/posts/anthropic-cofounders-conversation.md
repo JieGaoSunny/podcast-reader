@@ -1,6 +1,7 @@
-﻿---
+---
 title: "Building Anthropic：七位联合创始人的圆桌对话"
 date: 2024-12-20
+published_at: 2026-03-26
 source_url: "https://www.youtube.com/watch?v=om2lIWXLLN4"
 channel: "Anthropic"
 guest: "Dario Amanei, Daniela Amanei, Chris Olah, Jared Kaplan, Sam McCandlish, Tom Brown, Jack Clark"

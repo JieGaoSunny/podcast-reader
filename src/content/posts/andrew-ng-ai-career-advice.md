@@ -1,6 +1,7 @@
 ---
 title: "吴恩达斯坦福讲座：AI 时代的职业建议，写给每一个想入行的人"
 date: 2025-12-16
+published_at: 2026-04-07
 source_url: "https://www.youtube.com/watch?v=AuZoDsNmG_s"
 channel: "Stanford Online"
 guest: "Andrew Ng"

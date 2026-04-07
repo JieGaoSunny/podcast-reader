@@ -1,6 +1,7 @@
 ---
 title: "从怀疑论者到虔诚信徒：OpenClaw 如何改变了我的人生"
 date: 2026-03-29
+published_at: 2026-03-30
 source_url: "https://www.youtube.com/watch?v=DIa0MYJzM5I"
 channel: "Lenny's Podcast"
 guest: "Claire Vo"

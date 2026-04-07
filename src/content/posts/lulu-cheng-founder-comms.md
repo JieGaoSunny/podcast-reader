@@ -1,6 +1,7 @@
 ---
 title: "创始人的传播圣经：Lulu Cheng Meservey 的叙事炼金术"
 date: 2025-03-17
+published_at: 2026-03-26
 source_url: "https://www.youtube.com/watch?v=GRoU1T4E9rQ"
 channel: "Uncapped with Jack Altman"
 guest: "Lulu Cheng Meservey"

@@ -1,6 +1,7 @@
 ---
 title: "Andrej Karpathy：编程的终结、AI Agent 与 2025 年的软件世界"
 date: 2026-03-21
+published_at: 2026-03-30
 source_url: "https://www.youtube.com/watch?v=kwSVtQ7dziU"
 channel: "No Priors"
 guest: "Andrej Karpathy"

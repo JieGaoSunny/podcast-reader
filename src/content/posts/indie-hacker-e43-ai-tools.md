@@ -1,6 +1,7 @@
 ---
 title: "被一个整理工具击败：NotebookLM 如何改变内容生产的游戏规则"
 date: 2025-05-15
+published_at: 2026-04-07
 source_url: "https://www.youtube.com/watch?v=oKjnzloSAhg"
 channel: "硬地骇客"
 guest: "硬地骇客主播"

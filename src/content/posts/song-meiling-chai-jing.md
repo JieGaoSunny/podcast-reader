@@ -1,6 +1,7 @@
-﻿---
+---
 title: "宋美龄：如果人生重来，我不会结婚"
 date: 2026-03-14
+published_at: 2026-03-24
 source_url: "https://www.youtube.com/watch?v=Fh5HeQN5kI8"
 channel: "柴静 Chai Jing"
 guest: "宋美龄(柴静讲述)"

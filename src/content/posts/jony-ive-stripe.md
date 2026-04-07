@@ -1,6 +1,7 @@
 ---
 title: "Jony Ive：设计是对人类的感恩"
 date: 2025-05-08
+published_at: 2026-03-30
 source_url: "https://www.youtube.com/watch?v=wLb9g_8r-mE"
 channel: "Stripe Sessions"
 guest: "Jony Ive"

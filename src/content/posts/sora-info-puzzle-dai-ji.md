@@ -1,6 +1,7 @@
-﻿---
+---
 title: "Sora 信息拼图与大模型淘汰赛：戴雨森、季逸超深度对话"
 date: 2024-08-17
+published_at: 2026-03-24
 source_url: "https://www.youtube.com/watch?v=I5asIq_vpHs"
 channel: "张小珺 Podcast"
 guest: "戴雨森、季逸超"

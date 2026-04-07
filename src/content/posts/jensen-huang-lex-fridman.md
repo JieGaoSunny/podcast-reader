@@ -1,6 +1,7 @@
-﻿---
+---
 title: "黄仁勋：从芯片到AI工厂，NVIDIA的极限协同设计哲学"
 date: 2026-03-24
+published_at: 2026-03-26
 source_url: "https://www.youtube.com/watch?v=vif8NQcjVf0"
 channel: "Lex Fridman Podcast"
 guest: "Jensen Huang"

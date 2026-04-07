@@ -4,7 +4,14 @@ import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('posts'))
   .filter(p => !p.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => {
+    const aDate = a.data.published_at || a.data.date;
+    const bDate = b.data.published_at || b.data.date;
+    return bDate.valueOf() - aDate.valueOf();
+  });
+
+const now = new Date();
+const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
 ---
 
 <BaseLayout title="播客精读录 — 好播客，值得再读一次">
@@ -23,6 +30,10 @@ const posts = (await getCollection('posts'))
           month: 'short',
           day: 'numeric',
         });
+        const publishedAt = post.data.published_at;
+        const isNew = publishedAt && new Date(publishedAt) >= sevenDaysAgo;
+        const showPublishedAt = publishedAt && new Date(publishedAt).toDateString() !== new Date(post.data.date).toDateString();
+        const publishedAtStr = publishedAt ? `${new Date(publishedAt).getMonth() + 1}月${new Date(publishedAt).getDate()}日` : '';
         return (
           <a href={`/posts/${post.id}`} class="group block">
             <article class:list={[
@@ -42,6 +53,7 @@ const posts = (await getCollection('posts'))
               <div class="flex-1 min-w-0">
                 <h2 class="text-[15px] font-semibold text-[#37352F] leading-snug line-clamp-2 mb-1">
                   {post.data.title}
+                  {isNew && <span class="bg-[#DBEDDB] text-[#2B593F] text-[10px] font-medium px-1.5 py-0.5 rounded-[3px] ml-1.5 align-middle">NEW</span>}
                 </h2>
                 <div class="flex items-center gap-2 text-[12px] text-[#9B9A97] mb-2">
                   <span>{post.data.channel}</span>
@@ -53,6 +65,12 @@ const posts = (await getCollection('posts'))
                   )}
                   <span>·</span>
                   <span>{formattedDate}</span>
+                  {showPublishedAt && (
+                    <>
+                      <span>·</span>
+                      <span>上架于 {publishedAtStr}</span>
+                    </>
+                  )}
                 </div>
                 {post.data.tags && post.data.tags.length > 0 && (
                   <div class="flex flex-wrap gap-1">
