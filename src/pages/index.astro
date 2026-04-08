@@ -42,7 +42,8 @@ const posts = (await getCollection('posts'))
         return (
           <a href={`/posts/${post.id}`} class="group block post-item"
              data-published-at={publishedAt ? new Date(publishedAt).getTime() : new Date(post.data.date).getTime()}
-             data-date={new Date(post.data.date).getTime()}>
+             data-date={new Date(post.data.date).getTime()}
+             data-published-ts={publishedAt ? new Date(publishedAt).toISOString() : ''}>
             <article class:list={[
               "flex gap-5 py-4 -mx-3 px-3 rounded-[4px] transition-colors hover:bg-[#F7F6F3]",
               i > 0 && "border-t border-[#E9E9E7]"
@@ -60,6 +61,7 @@ const posts = (await getCollection('posts'))
               <div class="flex-1 min-w-0">
                 <h2 class="text-[15px] font-semibold text-[#37352F] leading-snug line-clamp-2 mb-1">
                   {post.data.title}
+                  <span class="new-badge hidden ml-1.5 align-middle inline-block text-[10px] font-medium bg-[#EB5757] text-white px-1.5 py-0.5 rounded-[3px] leading-none" style="vertical-align: middle;">NEW</span>
                 </h2>
                 <div class="flex items-center gap-2 text-[12px] text-[#9B9A97] mb-2">
                   <span>{post.data.channel}</span>
@@ -108,6 +110,17 @@ const posts = (await getCollection('posts'))
 </style>
 
 <script>
+  // NEW badge: show for posts published within 3 days
+  const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+  const now = Date.now();
+  document.querySelectorAll('.post-item').forEach(item => {
+    const ts = item.getAttribute('data-published-ts');
+    if (ts && (now - new Date(ts).getTime()) < THREE_DAYS) {
+      const badge = item.querySelector('.new-badge');
+      if (badge) badge.classList.remove('hidden');
+    }
+  });
+
   const btns = document.querySelectorAll('.sort-btn');
   const list = document.getElementById('post-list');
 
