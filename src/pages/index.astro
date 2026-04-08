@@ -126,15 +126,15 @@ const posts = (await getCollection('posts'))
     }
   });
 
-  function updateBadges(sortMode: string) {
+  function updateBadges() {
     items.forEach(item => {
       const badge = item.querySelector('.new-badge') as HTMLElement | null;
       if (!badge) return;
-      badge.style.display = (sortMode === 'published' && newItems.has(item)) ? 'inline-block' : 'none';
+      badge.style.display = newItems.has(item) ? 'inline-block' : 'none';
     });
   }
-  // Default sort is 'date', so badges hidden on load
-  updateBadges('date');
+  // Show badges on load
+  updateBadges();
 
   const btns = document.querySelectorAll('.sort-btn');
   const list = document.getElementById('post-list');
@@ -163,8 +163,6 @@ const posts = (await getCollection('posts'))
         }
         list!.appendChild(item);
       });
-
-      updateBadges(sortMode);
     });
   });
 </script>
