@@ -5,9 +5,7 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('posts'))
   .filter(p => !p.data.draft)
   .sort((a, b) => {
-    const aDate = a.data.published_at || a.data.date;
-    const bDate = b.data.published_at || b.data.date;
-    return bDate.valueOf() - aDate.valueOf();
+    return new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf();
   });
 
 
@@ -25,8 +23,8 @@ const posts = (await getCollection('posts'))
     <div class="max-w-[720px] mx-auto px-6 pb-4">
       <div class="flex items-center gap-1">
         <svg class="w-3.5 h-3.5 text-[#9B9A97] mr-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M6 12h12M9 18h6"/></svg>
-        <button data-sort="published" class="sort-btn sort-btn-active text-[12px] px-2.5 py-1 rounded-[3px] transition-colors">最新上架</button>
-        <button data-sort="date" class="sort-btn text-[12px] px-2.5 py-1 rounded-[3px] transition-colors">视频时间</button>
+        <button data-sort="published" class="sort-btn text-[12px] px-2.5 py-1 rounded-[3px] transition-colors">最新上架</button>
+        <button data-sort="date" class="sort-btn sort-btn-active text-[12px] px-2.5 py-1 rounded-[3px] transition-colors">视频时间</button>
       </div>
     </div>
 
@@ -113,6 +111,7 @@ const posts = (await getCollection('posts'))
   // NEW badge: show only for posts with the latest published_at date
   const items = document.querySelectorAll('.post-item');
   let maxDate = 0;
+  const newItems = new Set<Element>();
   items.forEach(item => {
     const ts = item.getAttribute('data-published-ts');
     if (ts) {
@@ -123,10 +122,23 @@ const posts = (await getCollection('posts'))
   items.forEach(item => {
     const ts = item.getAttribute('data-published-ts');
     if (ts && new Date(ts).setHours(0,0,0,0) === maxDate) {
-      const badge = item.querySelector('.new-badge');
-      if (badge) badge.classList.remove('hidden');
+      newItems.add(item);
     }
   });
+
+  function updateBadges(sortMode: string) {
+    items.forEach(item => {
+      const badge = item.querySelector('.new-badge');
+      if (!badge) return;
+      if (sortMode === 'published' && newItems.has(item)) {
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    });
+  }
+  // Default sort is 'date', so badges hidden on load
+  updateBadges('date');
 
   const btns = document.querySelectorAll('.sort-btn');
   const list = document.getElementById('post-list');
@@ -136,14 +148,15 @@ const posts = (await getCollection('posts'))
       btns.forEach(b => b.classList.remove('sort-btn-active'));
       btn.classList.add('sort-btn-active');
 
-      const key = btn.getAttribute('data-sort') === 'date' ? 'data-date' : 'data-published-at';
-      const items = Array.from(list!.querySelectorAll('.post-item'));
-      items.sort((a, b) => {
+      const sortMode = btn.getAttribute('data-sort')!;
+      const key = sortMode === 'date' ? 'data-date' : 'data-published-at';
+      const sortItems = Array.from(list!.querySelectorAll('.post-item'));
+      sortItems.sort((a, b) => {
         return Number(b.getAttribute(key)) - Number(a.getAttribute(key));
       });
 
       // Re-apply borders
-      items.forEach((item, i) => {
+      sortItems.forEach((item, i) => {
         const article = item.querySelector('article');
         if (article) {
           if (i > 0) {
@@ -154,6 +167,8 @@ const posts = (await getCollection('posts'))
         }
         list!.appendChild(item);
       });
+
+      updateBadges(sortMode);
     });
   });
 </script>
