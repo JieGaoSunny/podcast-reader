@@ -59,7 +59,7 @@ const posts = (await getCollection('posts'))
               <div class="flex-1 min-w-0">
                 <h2 class="text-[15px] font-semibold text-[#37352F] leading-snug line-clamp-2 mb-1">
                   {post.data.title}
-                  <span class="new-badge hidden ml-1.5 align-middle inline-block text-[10px] font-medium bg-[#D3E5EF] text-[#2E7D9A] px-1.5 py-0.5 rounded-[3px] leading-none" style="vertical-align: middle;">NEW</span>
+                  <span class="new-badge ml-1.5 align-middle text-[10px] font-medium bg-[#D3E5EF] text-[#2E7D9A] px-1.5 py-0.5 rounded-[3px] leading-none" style="display: none; vertical-align: middle;">NEW</span>
                 </h2>
                 <div class="flex items-center gap-2 text-[12px] text-[#9B9A97] mb-2">
                   <span>{post.data.channel}</span>
@@ -128,13 +128,9 @@ const posts = (await getCollection('posts'))
 
   function updateBadges(sortMode: string) {
     items.forEach(item => {
-      const badge = item.querySelector('.new-badge');
+      const badge = item.querySelector('.new-badge') as HTMLElement | null;
       if (!badge) return;
-      if (sortMode === 'published' && newItems.has(item)) {
-        badge.classList.remove('hidden');
-      } else {
-        badge.classList.add('hidden');
-      }
+      badge.style.display = (sortMode === 'published' && newItems.has(item)) ? 'inline-block' : 'none';
     });
   }
   // Default sort is 'date', so badges hidden on load
