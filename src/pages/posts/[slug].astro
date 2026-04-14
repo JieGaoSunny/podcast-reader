@@ -41,9 +41,12 @@ for (const p of allPosts) {
     <aside class="hidden lg:block w-[240px] flex-shrink-0 border-r border-[#E9E9E7] overflow-y-auto sticky top-11 h-[calc(100vh-44px)] py-4 px-3">
       <div class="text-[11px] font-medium text-[#9B9A97] uppercase tracking-wider mb-3 px-2">文章列表</div>
       {[...grouped.entries()].map(([channel, posts]) => (
-        <div class="mb-3">
-          <div class="text-[11px] text-[#9B9A97] px-2 mb-1 truncate">{channel}</div>
-          <ul class="space-y-px">
+        <div class="mb-4">
+          <div class="flex items-center gap-1.5 px-2 mb-1.5">
+            <span class="text-[10px]">🎙️</span>
+            <span class="text-[11px] font-medium text-[#B4B4B0] tracking-wide truncate">{channel}</span>
+          </div>
+          <ul class="space-y-0.5">
             {posts.map((p) => {
               const isActive = p.id === post.id;
               return (
@@ -51,10 +54,10 @@ for (const p of allPosts) {
                   <a
                     href={`/posts/${p.id}`}
                     class:list={[
-                      "block text-[13px] leading-snug px-2 py-1 rounded-[3px] transition-colors truncate",
+                      "block text-[13px] leading-snug px-2 py-1.5 rounded-[4px] transition-colors truncate",
                       isActive
-                        ? "bg-[#F1F1EF] text-[#37352F] font-medium"
-                        : "text-[#9B9A97] hover:bg-[#F7F6F3] hover:text-[#37352F]"
+                        ? "bg-[#EDEDED] text-[#37352F] font-medium"
+                        : "text-[#55534E] hover:bg-[#F7F6F3] hover:text-[#37352F]"
                     ]}
                     title={p.data.title}
                   >
