@@ -42,6 +42,11 @@ import '../styles/global.css';
 
     <slot />
 
+    <script>
+      import { inject } from '@vercel/analytics';
+      inject();
+    </script>
+
     <footer class="border-t border-[#E9E9E7] text-[13px] text-[#9B9A97] bg-[#F7F6F3]">
       <div class="max-w-[900px] mx-auto px-6 py-6 text-center">
         <p>© 2026 播客精读录 · 好播客，值得再读一次</p>
