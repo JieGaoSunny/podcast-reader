@@ -1,6 +1,7 @@
----
+﻿---
 title: "Duolingo CEO：现在两个人就能做出一个大产品"
 date: 2026-04-10
+published_at: 2026-04-14
 source_url: "https://www.youtube.com/watch?v=GDeEATJcbJo"
 channel: "Silicon Valley Girl"
 guest: "Luis von Ahn"

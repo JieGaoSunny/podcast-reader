@@ -1,6 +1,7 @@
----
+﻿---
 title: "AI 时代的残酷真相：Keith Rabois 谈人才、速度与不妥协"
 date: 2026-04-11
+published_at: 2026-04-14
 source_url: "https://www.youtube.com/watch?v=xCd9ykretlg"
 channel: "Lenny's Podcast"
 guest: "Keith Rabois"

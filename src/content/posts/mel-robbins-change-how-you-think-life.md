@@ -1,6 +1,7 @@
----
+﻿---
 title: "活着这件事，最难的是只有一次：Ocean Vuong 谈羞耻、尊严与有意义的人生"
 date: 2026-01-26
+published_at: 2026-04-14
 source_url: "https://www.youtube.com/watch?v=M6MzKYP9XeI"
 channel: "Mel Robbins"
 guest: "Ocean Vuong"

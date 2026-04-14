@@ -1,6 +1,7 @@
----
+﻿---
 title: "Figma CEO Dylan Field：AI 时代，设计就是新的代码"
 date: 2026-04-12
+published_at: 2026-04-14
 source_url: "https://www.youtube.com/watch?v=eqPljh_9C9Y"
 channel: "Peter Yang"
 guest: "Dylan Field"
